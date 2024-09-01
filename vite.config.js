@@ -23,5 +23,8 @@ export default defineConfig({
     alias: {
       '@': '/src'
     }
+  },
+  server: {
+    host: '0.0.0.0'
   }
 })
