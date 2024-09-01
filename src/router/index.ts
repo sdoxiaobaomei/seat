@@ -1,34 +1,63 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 // import { usePermissStore } from '../store/permiss';
 import index from '../views/Index.vue';
+import login from '../views/login.vue';
+import register from '../views/register.vue';
 // import NProgress from 'nprogress';
 // import 'nprogress/nprogress.css';
 
-const routes: RouteRecordRaw[] = [
-    {
-        path: '/',
-        redirect: '/dashboard',
-    },
-    {
-        path: '/',
-        name: 'Home',
-        component: index,
-        children: [
-            {
-                path: '/dashboard',
-                name: 'dashboard',
-                meta: {
-                    title: '日历',
-                    noAuth: true,
-                },
-                component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
-            },
-        ],
-    },
-    { path: '/:path(.*)', redirect: '/404' },
-    
-];
+// const routes: RouteRecordRaw[] = [
+//     {
+//         path: '/',
+//         redirect: '/dashboard',
+//     },
+//     {
+//         path: '/',
+//         name: 'Home',
+//         component: index,
+//         children: [
+//             {
+//                 path: '/dashboard',
+//                 name: 'dashboard',
+//                 meta: {
+//                     title: '日历',
+//                     noAuth: true,
+//                 },
+//                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
+//             },
+//             {
+//                 path: '/login',
+//                 name: 'login',
+//                 component: login,
+//             },
+//             {
+//                 path: '/register',
+//                 name: 'Register',
+//                 component: register,
+//             },
+//         ],
+//     },
+//     { path: '/:path(.*)', redirect: '/404' }, 
+// ];
 
+const routes= [
+    {
+        path: '/',
+        name: 'Login',
+        component: login,
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: register,
+    },
+    {
+        path: '/index',
+        name: 'Index',
+        component: index,
+    },
+];
+ 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,

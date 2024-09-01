@@ -11,8 +11,8 @@ const goBack = () => {
 
 <template>
   <el-config-provider :locale="zhCn">
-    <!-- <router-view/> -->
-    <IndexVue />
+    <router-view/>
+    <!-- <IndexVue /> -->
 
   </el-config-provider>
 </template>

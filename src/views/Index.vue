@@ -3,13 +3,13 @@
 // import { useTabsStore } from '@/store/tabs';
 import { CalendarInstance } from 'element-plus';
 import vHeader from '../components/header.vue';
-// import vSidebar from '@/components/sidebar.vue';
+import vSidebar from '@/components/sidebar.vue';
 import vTabs from '../components/tabs.vue';
 import { useTabsStore } from '../store/tabs';
 import {ref,onMounted,onBeforeUnmount }from 'vue';
 import calendar from '../store/lunarDay';
 import { ElMessageBox } from 'element-plus';
-
+import calendarVue from '../components/calendarVue.vue';
 const tabs = useTabsStore();
 const datePicked = ref('');
 const value = ref(new Date());
@@ -40,25 +40,6 @@ const seats = ref([
     { label: 'B49' },
 ])
 
-const isToday = (date:Date) =>{
-    return date.toDateString() === new Date().toDateString();
-}
-
-function isHoliday(soltData) {
-    let solarDayArr = soltData.day.split('-');
-    let lunarDay:any = calendar.solar2lunar(solarDayArr[0], solarDayArr[1], solarDayArr[2])
-    let festAndTerm:any = [];
-    festAndTerm.push(lunarDay.festival == null ? '' : ' ' + lunarDay.festival);
-    festAndTerm.push(lunarDay.lunarFestival == null ? '' : '' + lunarDay.lunarFestival);
-    festAndTerm.push(lunarDay.Term == null ? '' : '' + lunarDay.Term);
-    festAndTerm = festAndTerm.join('');
-    return festAndTerm;
-    // return festAndTerm != '';
-}
-
-var isHovered=ref(false);
-
-const calendarItems=[];
 
 
 </script>
@@ -66,29 +47,13 @@ const calendarItems=[];
 <template>
     <div class="wrapper">
         <v-header />
-        <div class="content-box" >
+        <v-sidebar />
+        <div class="content-box">
             <!-- <v-tabs></v-tabs> -->
             <!-- <h2>content box</h2> -->
             <el-tabs type="border-card">
                 <el-tab-pane v-for="seat in seats" :label="seat.label">
-                    <div class="content">
-                        <el-calendar v-model="value">
-                            <template #date-cell="{data}">
-                                <div v-if="isToday(data.date)">
-                                    {{ '今天'  }}
-                                </div>
-                                <div v-else v-for="item in calendarItems" @mouseenter="isHovered=true" @mouseleave="isHovered=false" >
-                                    <p>{{ isHoliday(data)  }}</p>
-                                    <p>{{ (data.day.split('-').slice(2).join('')) }}</p>
-                                    <div :id="data.day" v-show="isHovered&&(data.day===item.beginTime)" >
-                                        <el-button type="info" >Info</el-button>
-                                    </div>
-                                   
-                                </div>
-                            </template>
-                              
-                        </el-calendar>
-                    </div>
+                    <calendarVue/>
                 </el-tab-pane>
             </el-tabs>
             
@@ -104,5 +69,18 @@ const calendarItems=[];
 .custom-date-class {
   /* cursor: pointer; */
   /* 其他你需要的样式 */
+}
+
+.content-box {
+    position: absolute;
+    left: 250px;
+    right: 0;
+    top: 70px;
+    bottom: 0;
+    padding-bottom: 30px;
+    -webkit-transition: left 0.3s ease-in-out;
+    transition: left 0.3s ease-in-out;
+    background: #eef0fc;
+    overflow: hidden;
 }
 </style>

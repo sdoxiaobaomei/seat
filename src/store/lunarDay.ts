@@ -326,6 +326,24 @@ const calendar = {
       "12-23": { title: "北方小年" },
       "12-24": { title: "南方小年" }
     },
+
+    /**
+     * 法定节假日
+     */
+    holidays: {
+      "1-1": { title: "元旦" },
+      "4-5": { title: "清明" },
+      "5-1": { title: "清明" },
+      "6-9": { title: "端午" },
+      "9-17": { title: "中秋" },
+      "10-1": { title: "国庆"},
+      "10-2": { title: "国庆"},
+      "10-3": { title: "国庆"},
+      "10-4": { title: "国庆"},
+      "10-5": { title: "国庆"},
+      "10-6": { title: "国庆"},
+      "10-7": { title: "国庆"},
+    },
   
     /**
      * 返回默认定义的阳历节日
@@ -1010,7 +1028,8 @@ const calendar = {
   
       const festival = this.festival;
       const lFestival = this.lFestival;
-  
+      const holidays = this.holidays;
+
       const festivalDate = m + "-" + d;
       const lunarFestivalDate = month + "-" + day;
   
@@ -1018,6 +1037,7 @@ const calendar = {
         date: solarDate,
         lunarDate: lunarDate,
         festival: festival[festivalDate] ? festival[festivalDate].title : null,
+        holidays: holidays[festivalDate] ? holidays[festivalDate].title : null,
         lunarFestival: lFestival[lunarFestivalDate]
           ? lFestival[lunarFestivalDate].title
           : null,
