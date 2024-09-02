@@ -54,6 +54,10 @@ const routes: RouteRecordRaw[]= [
             {
                 path:'/dashboard',
                 name:'dashboard',
+                meta: {
+                    title: '系统首页',
+                    noAuth: false,
+                },
                 component: () => import('@/views/dashboard.vue'),
             },
             {
@@ -71,6 +75,10 @@ const routes: RouteRecordRaw[]= [
     {
         path: '/login',
         name: 'login',
+        meta: {
+            title: '系统首页',
+            noAuth: true,
+        },
         component: login,
     },
 ];
@@ -81,10 +89,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    // console.log('brefore each')
     NProgress.start();
     const role = localStorage.getItem('username');
     // const permiss = usePermissStore();
-
+    
     if (!role && to.meta.noAuth !== true) {
         next('/login');
     // } else if (typeof to.meta.permiss == 'string' && !permiss.key.includes(to.meta.permiss)) {
