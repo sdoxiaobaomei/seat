@@ -28,13 +28,27 @@
 </script>
 
 <template>
-    <el-tabs type="border-card">
-        <el-tab-pane v-for="seat in seats" :label="seat.label">
-            <calendarVue/>
-        </el-tab-pane>
-    </el-tabs>
+    <el-scrollbar max-height="580px">
+        <div class="content">
+
+            <el-tabs type="border-card" class="tab_card">
+                <el-tab-pane v-for="seat in seats" :label="seat.label">
+                    <calendarVue/>
+                </el-tab-pane>
+            </el-tabs>
+        </div>
+    </el-scrollbar>
 </template>
 
 <style scss>
+.content{
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+    
+}
+.tab_card{
+    width: 1000px;
+}
 
 </style>

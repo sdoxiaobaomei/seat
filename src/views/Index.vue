@@ -34,7 +34,6 @@ const Component = ref();
             <!-- <h2>content box</h2> -->
             <div class="content">
                 <router-view />
-                   
             </div>
             
         </div>
