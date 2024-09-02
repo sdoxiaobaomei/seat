@@ -10,6 +10,8 @@ import {ref,onMounted,onBeforeUnmount }from 'vue';
 import calendar from '../store/lunarDay';
 import { ElMessageBox } from 'element-plus';
 import calendarVue from '../components/calendarVue.vue';
+
+
 const tabs = useTabsStore();
 const datePicked = ref('');
 const value = ref(new Date());
@@ -17,30 +19,9 @@ const disabledDate = ref(new Date(2024,8,10));
 const Holidays = ref([
     '2023-01-01'
 ])
-const seats = ref([
-    //EE
-    { label: 'A46' },
-    { label: 'B46' },
-    //Room2
-    { label: 'C46' },
-    { label: 'A47' },
-    { label: 'B47' },
-    { label: 'C47' },
-    { label: 'D47' },
-    //CM
-    { label: 'A48' },
-    // Room1
-    { label: 'B48' },
-    { label: 'C48' },
-    { label: 'D48' },
-    { label: 'C49' },
-    { label: 'D49' },
-    //Flex
-    { label: 'A49' },
-    { label: 'B49' },
-])
 
 
+const Component = ref();
 
 </script>
 
@@ -51,11 +32,10 @@ const seats = ref([
         <div class="content-box">
             <!-- <v-tabs></v-tabs> -->
             <!-- <h2>content box</h2> -->
-            <el-tabs type="border-card">
-                <el-tab-pane v-for="seat in seats" :label="seat.label">
-                    <calendarVue/>
-                </el-tab-pane>
-            </el-tabs>
+            <div class="content">
+                <router-view />
+                   
+            </div>
             
         </div>
     </div>

@@ -30,7 +30,7 @@ function whichHoliday(soltData) {
                     <div class="date-area">
                         <div v-if="isToday(data.date)">
                             <p>{{ whichHoliday(data)}}</p>
-                            {{ '今天'  }}
+                            <p>{{ '今天' }}</p>
                         </div>
                         <div v-else>
                             <p>{{ whichHoliday(data)}}</p>

@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import index from '../views/Index.vue';
 import login from '../views/login.vue';
 import register from '../views/register.vue';
+import dashboard from '@/views/dashboard.vue';
 // import NProgress from 'nprogress';
 // import 'nprogress/nprogress.css';
 
@@ -40,11 +41,27 @@ import register from '../views/register.vue';
 //     { path: '/:path(.*)', redirect: '/404' }, 
 // ];
 
-const routes= [
+const routes: RouteRecordRaw[]= [
     {
         path: '/',
-        name: 'Login',
-        component: login,
+        redirect: '/dashboard',
+    },
+    {
+        path: '/',
+        name: 'index',
+        component: index,
+        children: [
+            {
+                path:'/dashboard',
+                name:'dashboard',
+                component: () => import('@/views/dashboard.vue'),
+            },
+            {
+                path:'/tic',
+                name:'tic',
+                component: () => import('@/components/tabs.vue'),
+            },
+        ],
     },
     {
         path: '/register',
@@ -52,9 +69,9 @@ const routes= [
         component: register,
     },
     {
-        path: '/index',
-        name: 'Index',
-        component: index,
+        path: '/login',
+        name: 'login',
+        component: login,
     },
 ];
  

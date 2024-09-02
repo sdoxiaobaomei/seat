@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
+import { UserFilled } from '@element-plus/icons-vue';
 // import { useSidebarStore } from '../store/sidebar';
 // import { useRouter } from 'vue-router';
 // import imgurl from '../assets/img/img.jpg';
@@ -37,6 +38,7 @@ const setFullScreen = () => {
         document.body.requestFullscreen.call(document.body);
     }
 };
+const user=localStorage.getItem('username');
 </script>
 
 <template>
@@ -55,10 +57,15 @@ const setFullScreen = () => {
             </div> -->
         </div>
         <div class="header-right">
-            <!-- <div class="header-user-icon"> -->
+            <div class="header-user-icon">
+                <span>{{ user +"   "}} </span>
+                <el-avatar :size="25">
+                    <el-icon color="black"><UserFilled /></el-icon>
+                </el-avatar>
+                <!-- <el-icon><User /></el-icon> -->
                 <!-- 用户头像 -->
                 <!-- <el-avatar class="user-avator" :size="30" :src="imgurl" /> -->
-            <!-- </div> -->
+            </div>
         </div>
     </div>
 </template>
