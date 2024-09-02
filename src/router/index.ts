@@ -4,8 +4,8 @@ import index from '../views/Index.vue';
 import login from '../views/login.vue';
 import register from '../views/register.vue';
 import dashboard from '@/views/dashboard.vue';
-// import NProgress from 'nprogress';
-// import 'nprogress/nprogress.css';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 // const routes: RouteRecordRaw[] = [
 //     {
@@ -80,23 +80,23 @@ const router = createRouter({
     routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//     NProgress.start();
-//     const role = localStorage.getItem('vuems_name');
-//     const permiss = usePermissStore();
+router.beforeEach((to, from, next) => {
+    NProgress.start();
+    const role = localStorage.getItem('username');
+    // const permiss = usePermissStore();
 
-//     if (!role && to.meta.noAuth !== true) {
-//         next('/login');
-//     } else if (typeof to.meta.permiss == 'string' && !permiss.key.includes(to.meta.permiss)) {
-//         // 如果没有权限，则进入403
-//         next('/403');
-//     } else {
-//         next();
-//     }
-// });
+    if (!role && to.meta.noAuth !== true) {
+        next('/login');
+    // } else if (typeof to.meta.permiss == 'string' && !permiss.key.includes(to.meta.permiss)) {
+    //     // 如果没有权限，则进入403
+    //     next('/403');
+    } else {
+        next();
+    }
+});
 
-// router.afterEach(() => {
-//     NProgress.done();
-// });
+router.afterEach(() => {
+    NProgress.done();
+});
 
 export default router;
