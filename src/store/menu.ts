@@ -17,13 +17,13 @@ export const menuData: Menus[] = [
                 id: '11',
                 pid: '1',
                 index: '/tic',
-                title: 'TIC - 滨江',
+                title: 'TT - 天堂',
             },
             {
                 id: '12',
                 pid: '1',
                 index: '/',
-                title: 'TT - 天堂',
+                title: 'TIC - 滨江',
             }
         ],
     }

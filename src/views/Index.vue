@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { useSidebarStore } from '@/store/sidebar';
+import { useSidebarStore } from '@/store/sidebar';
 // import { useTabsStore } from '@/store/tabs';
 import { CalendarInstance } from 'element-plus';
 import vHeader from '../components/header.vue';
@@ -20,23 +20,37 @@ const Holidays = ref([
     '2023-01-01'
 ])
 
-
+const sidebar = useSidebarStore();
 const Component = ref();
 
 </script>
 
 <template>
     <div class="wrapper">
-        <v-header />
-        <v-sidebar />
-        <div class="content-box">
+        <el-container>
+            <el-header>
+                <v-header />
+
+            </el-header>
+            <el-container>
+                <el-aside>
+                    <v-sidebar />
+                </el-aside>
+                <el-main class="content-box" :class="{ 'content-collapse': sidebar.collapse }">
+                    <transition name="move" mode="out-in">
+
+                        <router-view />
+                    </transition>
+                    <!-- <div class="content" > -->
+                    <!-- </div> -->
+                </el-main>
+            </el-container>
+        </el-container>
+        <!-- <div class="content-box"> -->
             <!-- <v-tabs></v-tabs> -->
             <!-- <h2>content box</h2> -->
-            <div class="content">
-                <router-view />
-            </div>
             
-        </div>
+        <!-- </div> -->
     </div>
 
 </template>
@@ -61,5 +75,8 @@ const Component = ref();
     transition: left 0.3s ease-in-out;
     background: #eef0fc;
     overflow: hidden;
+}
+.content-collapse {
+    left: 65px;
 }
 </style>

@@ -90,7 +90,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         if (valid) {
             ElMessage.success('登陆成功');
             localStorage.setItem('username', param.username);
-            router.push('/index');
+            router.push('/dashboard');
             if (checked.value) {
                 localStorage.setItem('login-param', JSON.stringify(param));
             } else {

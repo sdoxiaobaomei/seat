@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-// import { useSidebarStore } from '../store/sidebar';
+import { computed, ref } from 'vue';
+import { useSidebarStore } from '../store/sidebar';
 import { useRoute } from 'vue-router';
 import { menuData } from '../store/menu';
 
@@ -8,8 +8,9 @@ const route = useRoute();
 const onRoutes = computed(() => {
     return route.path;
 });
+const sidebar = useSidebarStore();
 
-// const sidebar = useSidebarStore();
+
 </script>
 
 <template>
@@ -17,6 +18,7 @@ const onRoutes = computed(() => {
         <el-menu
             class="sidebar-el-menu"
             :default-active="onRoutes"
+            :collapse="sidebar.collapse"
             router
         >
             <template v-for="item in menuData">

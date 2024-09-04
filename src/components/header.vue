@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { UserFilled } from '@element-plus/icons-vue';
-// import { useSidebarStore } from '../store/sidebar';
+import { useSidebarStore } from '../store/sidebar';
 // import { useRouter } from 'vue-router';
 // import imgurl from '../assets/img/img.jpg';
 
-const username: string | null = localStorage.getItem('vuems_name');
+
+const username: string | null = localStorage.getItem('username');
 const message: number = 2;
 
-// const sidebar = useSidebarStore();
-// // 侧边栏折叠
-// const collapseChage = () => {
-//     sidebar.handleCollapse();
-// };
+const sidebar = useSidebarStore();
+// 侧边栏折叠
+const collapseChage = () => {
+    sidebar.handleCollapse();
+};
 
 onMounted(() => {
     // if (document.body.clientWidth < 1500) {
@@ -47,14 +48,14 @@ const user=localStorage.getItem('username');
         <div class="header-left">
             <!-- <img class="logo" src="../assets/img/logo.svg" alt="" /> -->
             <div class="web-title">订座</div>
-            <!-- <div class="collapse-btn" @click="collapseChage">
+            <div class="collapse-btn" @click="collapseChage">
                 <el-icon v-if="sidebar.collapse">
                     <Expand />
                 </el-icon>
                 <el-icon v-else>
                     <Fold />
                 </el-icon>
-            </div> -->
+            </div>
         </div>
         <div class="header-right">
             <div class="header-user-icon">
@@ -77,7 +78,7 @@ const user=localStorage.getItem('username');
     align-items: center;
     box-sizing: border-box;
     width: 100%;
-    height: 70px;
+    height: 100%;
     color: #fff;
     background-color: #242f42;
     border-bottom: 1px solid #ddd;

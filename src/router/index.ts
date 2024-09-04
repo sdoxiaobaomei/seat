@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 // import { usePermissStore } from '../store/permiss';
 import index from '../views/Index.vue';
-import login from '../views/login.vue';
-import register from '../views/register.vue';
+import login from '../views/pages/login.vue';
+import register from '../views/pages/register.vue';
 import dashboard from '@/views/dashboard.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
