@@ -13,79 +13,79 @@ while (date.getMonth() + 1 === currentMonth) {
 
 const tableData = [
     {
-        seat: 'A46',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'A46-EE',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'B46',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'B46-EE',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'C46',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'C46-R2',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'A47',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'A47-R2',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'B47',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'B47-R2',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'c47',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'C47-R2',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'D47',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'D47-R2',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'A48',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'A48-CM',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
         seat: 'B48',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
-        seat: 'c48',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'C48',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
         seat: 'D48',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
         seat: 'A49',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
         seat: 'B49',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        "9-2": 'booked',
+        "9-3": 'booked',
     },
     {
-        seat: 'c49',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        seat: 'C49',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
     {
         seat: 'D49',
-        "9-1": 'booked',
-        "9-8": 'booked',
+        "9-3": 'booked',
+        "9-9": 'booked',
     },
 ]
 
@@ -118,7 +118,7 @@ function isWorkday(day) {
                 :key="index"
                 :prop="item"
                 :label="item">
-                <p v-if="!isWorkday(new Date(item).getDay())">休息</p>
+                <p v-if="!isWorkday(new Date(item).getDay())" style="background-color: brown;">休息</p>
             </el-table-column>
         </el-table>
     
