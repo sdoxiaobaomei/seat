@@ -8,6 +8,12 @@ const isToday = (date:Date) =>{
     return date.toDateString() === new Date().toDateString();
 }
 
+defineProps ({
+    seat:{
+        type: Object
+    }
+})
+
 function whichHoliday(soltData) {
     let solarDayArr = soltData.day.split('-');
     let lunarDay:any = calendar.solar2lunar(solarDayArr[0], solarDayArr[1], solarDayArr[2])
@@ -39,7 +45,7 @@ function whichHoliday(soltData) {
                                 <p>{{ (data.day.split('-').slice(2).join('')) }}</p>
                             </div>
                         </div>
-                        <calendar-button :data="data"/>
+                        <calendar-button :data="data" :seat/>
                         <!-- <div v-if="!isHoliday(data) && !isWeekend(data) && (data.type === 'current-month')" class="button-area">
                             <div>
                                 <el-button :id="data.day" size="small" :type="buttonType" round @click="bookButtonClick(data)">book</el-button>

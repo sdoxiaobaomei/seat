@@ -2,20 +2,36 @@
 import ticImgurl from '@/assets/img/tic.jpg';
 import ttImgurl from '@/assets/img/TT.jpg';
 import { getSeatBook } from '@/api/api';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const today = new Date();
 const currentMonth = today.getMonth() + 1;
+const currentYear = today.getFullYear();
 let dates = [];
 let date=new Date(today.getFullYear(),today.getMonth(),1)
 while (date.getMonth() + 1 === currentMonth) {
-    dates.push(currentMonth + '-' + date.getDate());
+    dates.push(currentYear+'-'+currentMonth + '-' + date.getDate());
     date.setDate(date.getDate() + 1);
 }
-const tableData = ref([]);
+const tableData = ref();
 const getData = async () => {
     const res = await getSeatBook();
-    tableData.value = res.data;
+    let seatBookList = res.data;
+    console.log(seatBookList)
+    seatBookList.forEach(element => {
+        let map = new Map([]);
+        map.set("seat", element.seat);
+        // tableData.value.push({seat: element.seat})
+        element.dates.forEach(item => {
+            console.log(item)
+            let key = item.date;
+            let value = item.username;
+            map.set(key, value);
+        });
+        // tableData.value = computed(()=>(map)).value;
+        console.log(computed(()=>(map)).value);
+    });
+    console.log(tableData)
 }
 getData();
 // const tableData = [
@@ -96,9 +112,9 @@ getData();
 //     },
 // ]
 
-function isWorkday(day) {
-    
-    return !(day === 5 || day === 6);
+function isWorkday(date) {
+    let dayInWeek = date.getDay();
+    return !(dayInWeek === 0 || dayInWeek === 6);
 }
 </script>
 <template>
@@ -125,7 +141,7 @@ function isWorkday(day) {
                 :key="index"
                 :prop="item"
                 :label="item">
-                <p v-if="!isWorkday(new Date(item).getDay())" style="background-color: brown;">休息</p>
+                <p v-if="!isWorkday(new Date(item))" style="background-color: brown;">休息</p>
             </el-table-column>
         </el-table>
     

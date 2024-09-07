@@ -6,8 +6,9 @@ import { useUserStore } from '@/store/user';
 
 const username=computed(() => useUserStore().userInfo);
 
-defineProps({
-    data: Object
+const {data, seat} = defineProps({
+    data: Object,
+    seat: Object
 });
 
 
@@ -29,8 +30,11 @@ const buttonTitle=ref('book');
 const isBooked=ref(false);
 function bookButtonClick(data) {
     //后台验证订座是否成功，然后设置已订状态
+
+    let today = data.day;//YYYY-MM-dd
+    console.log(today,"tab name:",seat)//seat of seats in server/data/db.json
+
     isBooked.value = true;
-    // console.log(username);
     buttonType.value = isBooked.value ? 'info' : 'success';
     // buttonTitle.value = useUserStore().userInfo;
     buttonTitle.value = isBooked.value ? localStorage.getItem('username') + " booked" : "book";

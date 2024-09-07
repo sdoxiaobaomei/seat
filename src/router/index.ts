@@ -63,6 +63,10 @@ const routes: RouteRecordRaw[]= [
             {
                 path:'/tic',
                 name:'tic',
+                meta: {
+                    title: '滨江',
+                    noAuth: false,
+                },
                 component: () => import('@/components/tabs.vue'),
             },
         ],

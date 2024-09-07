@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "server": "npx json-server ./src/server/data/db.json",
     "preview": "vite preview"
   },
   "dependencies": {
