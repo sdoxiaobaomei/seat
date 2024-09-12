@@ -32,13 +32,26 @@ onMounted(() => {
 //     }
 // };
 
-const setFullScreen = () => {
-    if (document.fullscreenElement) {
-        document.exitFullscreen();
-    } else {
-        document.body.requestFullscreen.call(document.body);
-    }
+
+// 登录方法，跳转到登录页面
+const login = () => {
+  // 假设登录页面路径为 '/login'
+  window.location.href = '/login';
 };
+
+// 登出方法，清除本地存储并刷新页面
+const logout = () => {
+  localStorage.removeItem('username');
+  window.location.reload();  // 刷新页面或者导航到登录页
+};
+
+// const setFullScreen = () => {
+//     if (document.fullscreenElement) {
+//         document.exitFullscreen();
+//     } else {
+//         document.body.requestFullscreen.call(document.body);
+//     }
+// };
 const user=localStorage.getItem('username');
 </script>
 
@@ -59,13 +72,12 @@ const user=localStorage.getItem('username');
         </div>
         <div class="header-right">
             <div class="header-user-icon">
-                <span>{{ user +"   "}} </span>
+                <span v-if="user">{{ user+' ' }} </span>
                 <el-avatar :size="25">
                     <el-icon color="black"><UserFilled /></el-icon>
                 </el-avatar>
-                <!-- <el-icon><User /></el-icon> -->
-                <!-- 用户头像 -->
-                <!-- <el-avatar class="user-avator" :size="30" :src="imgurl" /> -->
+                <el-button v-if="!user" size="small" type="primary" @click="login">Login</el-button>
+                <el-button v-else size="small" type='warning' @click="logout" class="logout-button" link>Logout</el-button>
             </div>
         </div>
     </div>
@@ -88,6 +100,8 @@ const user=localStorage.getItem('username');
     align-items: center;
     padding-left: 20px;
     height: 100%;
+    justify-content: center;
+    
 }
 .web-title {
     margin: 0 40px 0 10px;
@@ -96,5 +110,19 @@ const user=localStorage.getItem('username');
 .header-right {
     float: right;
     padding-right: 50px;
+}
+.header-user-icon{
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 使用 gap 为子元素添加10px的间隔 */
+}
+
+/* 自定义样式的 logout 按钮 */
+.logout-button {
+  font-weight: bold;          /* 加粗 */
+  text-decoration: underline; /* 下划线 */
+  color: white;               /* 按钮字体颜色 */
+  padding: 0;
+  margin: 0;
 }
 </style>

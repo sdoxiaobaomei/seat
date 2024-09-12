@@ -21,7 +21,7 @@ const Holidays = ref([
 ])
 
 const sidebar = useSidebarStore();
-const Component = ref();
+// const Component = ref();
 
 </script>
 
@@ -41,6 +41,11 @@ const Component = ref();
 
                         <router-view />
                     </transition>
+                    <!-- <router-view v-slot="{ Component }">
+                        <transition name="move" mode="out-in">
+                            <component :is="Component" />
+                        </transition>
+                    </router-view> -->
                     <!-- <div class="content" > -->
                     <!-- </div> -->
                 </el-main>
@@ -59,10 +64,10 @@ const Component = ref();
 .layout{
     height: 100%;
 }
-.custom-date-class {
-  /* cursor: pointer; */
-  /* 其他你需要的样式 */
-}
+/* .custom-date-class {
+   cursor: pointer; 
+   其他你需要的样式 
+} */
 
 .content-box {
     position: absolute;

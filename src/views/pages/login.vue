@@ -46,11 +46,12 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useTabsStore } from '@/store/tabs';
-import { useUserStore } from '@/store/user';
+
 // import { usePermissStore } from '@/store/permiss';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
+import { validateLoginUser } from '@/api/api';
 
 
 interface LoginInfo {
@@ -62,7 +63,7 @@ const lgStr = localStorage.getItem('login-param');
 const defParam = lgStr ? JSON.parse(lgStr) : null;
 const checked = ref(lgStr ? true : false);
 
-const userStore = useUserStore();
+
 const router = useRouter();
 const param = reactive<LoginInfo>({
   username: defParam ? defParam.username : '',
@@ -81,13 +82,16 @@ const rules: FormRules = {
 };
 // const permiss = usePermissStore();
 const login = ref<FormInstance>();
-const submitForm = (formEl: FormInstance | undefined) => {
-    console.log("login as ?");
-    console.log(formEl);
-    userStore.setUserInfo(param.username);
+
+const submitForm = async (formEl: FormInstance | undefined) => {
+    // console.log("login as ?");
+    // console.log(formEl);
+    
     if (!formEl) return;
+    const res = await validateLoginUser(param.username);
+    
     formEl.validate((valid: boolean) => {
-        if (valid) {
+        if (valid && (res.data.length !== 0)) {
             ElMessage.success('登陆成功');
             localStorage.setItem('username', param.username);
             router.push('/dashboard');

@@ -9,31 +9,6 @@
         seats.value = res.data;
     }
     getData();
-    
-
-    // const seats2 = ref ([
-    //     //EE
-    //     { name: 'A46' },
-    //     { name: 'B46' },
-    //     //Room2
-    //     { name: 'C46' },
-    //     { name: 'A47' },
-    //     { name: 'B47' },
-    //     { name: 'C47' },
-    //     { name: 'D47' },
-    //     //CM
-    //     { name: 'A48' },
-    //     // Room1
-    //     { name: 'B48' },
-    //     { name: 'C48' },
-    //     { name: 'D48' },
-    //     { name: 'C49' },
-    //     { name: 'D49' },
-    //     //Flex
-    //     { name: 'A49' },
-    //     { name: 'B49' },
-    // ])
-    // console.log(seats2)
 </script>
 
 <template>
