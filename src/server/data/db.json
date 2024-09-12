@@ -1,17 +1,40 @@
 {
-    "seats":[
-        { "id":"1","name":"A46","group":"EE"}
-    ],
-    "users":[
-        { "id":"1","username":"admin","password":"123","group":"EE"}
-    ],
-    "seat-book":[
+  "seats": [
+    {
+      "id": "1",
+      "name": "A46",
+      "group": "EE"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "123",
+      "group": "EE"
+    }
+  ],
+  "seat-book": [
+    {
+      "id": "A46-EE",
+      "dates": [
         {
-            "seat":"A46-EE", 
-            "dates":[
-                {"date": "2024-9-2","username":"admin"},
-                {"date": "2024-9-3","username":"admin"}
-            ]
+          "date": "2024-09-02",
+          "username": "admin"
+        },
+        {
+          "date": "2024-09-03",
+          "username": "admin"
+        },
+        {
+          "date": "2024-09-06",
+          "username": "admin"
+        },
+        {
+          "date": "2024-09-13",
+          "username": "admin"
         }
-    ]
+      ]
+    }
+  ]
 }

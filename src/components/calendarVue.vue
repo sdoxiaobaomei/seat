@@ -45,7 +45,7 @@ function whichHoliday(soltData) {
                                 <p>{{ (data.day.split('-').slice(2).join('')) }}</p>
                             </div>
                         </div>
-                        <calendar-button :data="data" :seat/>
+                        <calendar-button :data="data" :seat="seat"/>
                         <!-- <div v-if="!isHoliday(data) && !isWeekend(data) && (data.type === 'current-month')" class="button-area">
                             <div>
                                 <el-button :id="data.day" size="small" :type="buttonType" round @click="bookButtonClick(data)">book</el-button>

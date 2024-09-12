@@ -2,6 +2,7 @@
 import calendar from '../store/lunarDay';
 import { ref, computed }from 'vue';
 import { useUserStore } from '@/store/user';
+import { insertSeatBook } from '@/api/api';
 
 
 const username=computed(() => useUserStore().userInfo);
@@ -33,7 +34,10 @@ function bookButtonClick(data) {
 
     let today = data.day;//YYYY-MM-dd
     console.log(today,"tab name:",seat)//seat of seats in server/data/db.json
-
+    let id = seat.name + '-' + seat.group;
+    let username = localStorage.getItem('username');
+    let date = today;
+    console.log(insertSeatBook(id,username,date));
     isBooked.value = true;
     buttonType.value = isBooked.value ? 'info' : 'success';
     // buttonTitle.value = useUserStore().userInfo;
