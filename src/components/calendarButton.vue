@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import calendar from '../store/lunarDay';
-import { ref, onMounted }from 'vue';
+import { ref, onMounted, watch }from 'vue';
 import { deleteSeatBook, insertSeatBook, isSeatBookToday } from '@/api/api';
 
 const username = localStorage.getItem('username');
@@ -15,15 +15,28 @@ const buttonType=ref('success');
 const buttonTitle=ref('book');
 const isCurrentUserBooked = ref(false);
 const fetchSeatBooking = async () => {
-    const res = await isSeatBookToday(seat.name+'-'+seat.group,username,data.day); 
+    const res = await isSeatBookToday(seat.name+'-'+seat.group,username,data.day);
+    if (res.status === 404) {return}
+    if (data.type !== "current-month") {
+        return;
+    }
+    if (res === undefined) {
+        console.log("res not found of \"is seat book today\": ", res);
+        return;
+    }
     const seatBook = res.data;
+    if (seatBook.length === 0 ) {
+        return;
+    }
+    if (seatBook[0].dates === undefined) return;
     
-    const findResult = seatBook.dates.find(rec => {
+    // console.log("seatBook is : ", seatBook[0])
+    const findResult = seatBook[0].dates.find(rec => {
         if (rec.date === data.day) {
-            console.log("find book: ", rec)
+            // console.log("find book: ", rec)
             buttonTitle.value = rec.username + ' booked';
             isCurrentUserBooked.value = rec.username === username;
-            console.log("is current user book: ", isCurrentUserBooked.value)
+            // console.log("is current user book: ", isCurrentUserBooked.value)
         }
         return (rec.date === data.day);
     });
@@ -97,6 +110,21 @@ const confirmCancelEvent = () => {
     isBooked.value = false;
     isCurrentUserBooked.value = false;
 }
+
+watch(
+    ()=> data,
+    async (newValue, oldValue) => {
+    console.log("Month changed. Resetting button states.",oldValue,newValue);
+    buttonType.value = 'success';
+    buttonTitle.value = 'book';
+    isBooked.value = false;
+    isCurrentUserBooked.value = false;
+
+    // 在月份切换后重新获取座位预订状态
+    await fetchSeatBooking();
+  },
+  { deep: true } // 深度监听对象变化
+)
 </script>
 
 

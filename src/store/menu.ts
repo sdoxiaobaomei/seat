@@ -26,5 +26,11 @@ export const menuData: Menus[] = [
                 title: 'TIC - 滨江',
             }
         ],
+    },
+    {
+        id: '2',
+        title: '座位管理',
+        index: '/seat/manage',
+        icon: 'HomeFilled'
     }
 ];

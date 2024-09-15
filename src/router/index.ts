@@ -69,6 +69,15 @@ const routes: RouteRecordRaw[]= [
                 },
                 component: () => import('@/components/tabs.vue'),
             },
+            {
+                path: '/seat/manage',
+                name: 'seat-manage',
+                meta: {
+                    title: '座位管理',
+                    noAuth: false,
+                },
+                component: () => import('@/components/seatManage.vue'),
+            }
         ],
     },
     {
@@ -84,7 +93,7 @@ const routes: RouteRecordRaw[]= [
             noAuth: true,
         },
         component: login,
-    },
+    }
 ];
  
 const router = createRouter({

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CalendarDateType, CalendarInstance } from 'element-plus';
 import calendar from '../store/lunarDay';
 import calendarButton from './calendarButton.vue';
 import { ref } from 'vue';
@@ -26,35 +27,69 @@ function whichHoliday(soltData) {
     return festAndTerm;
     // return festAndTerm != '';
 }
+
+const calendarKey = ref(0);
+const calendarInstance = ref<CalendarInstance>()
+const selectDate = (val: CalendarDateType) => {
+    
+    calendarKey.value++;
+    
+    if (!calendarInstance.value) return;
+    
+    calendarInstance.value.selectDate(val);
+    
+}
+
 </script>
 
 <template>
     <div class="container">
         
-        <el-calendar v-model="value" class="custom-calendar">
+        <el-calendar v-model="value" class="custom-calendar" ref="calendarInstance">
+            <template #header="{ date }">
+                <!-- <span>Custom header content</span> -->
+                <span>{{ date }}</span>
+                <el-button-group>
+                    <!-- <el-button size="small" @click="selectDate('prev-year')">
+                    Previous Year
+                    </el-button> -->
+                    <el-button size="small" @click="selectDate('prev-month')">
+                        上个月
+                    </el-button>
+                    <el-button size="small" @click="selectDate('today')">
+                        今天
+                    </el-button>
+                    <el-button size="small" @click="selectDate('next-month')">
+                        下个月
+                    </el-button>
+                    <!-- <el-button size="small" @click="selectDate('next-year')">
+                    Next Year
+                    </el-button> -->
+                </el-button-group>
+            </template>
             <template #date-cell="{data}">
 
-                    <div class="custom-content">
-                        <div class="date-area">
-                            <div v-if="isToday(data.date)">
-                                <p>{{ whichHoliday(data)}}</p>
-                                <p>{{ '今天' }}</p>
-                            </div>
-                            <div v-else>
-                                <p>{{ whichHoliday(data)}}</p>
-                                <p>{{ (data.day.split('-').slice(2).join('')) }}</p>
-                            </div>
+                <div class="custom-content">
+                    <div class="date-area">
+                        <div v-if="isToday(data.date)">
+                            <p>{{ whichHoliday(data)}}</p>
+                            <p>{{ '今天' }}</p>
                         </div>
-                        <calendar-button :data="data" :seat="seat"/>
-                        <!-- <div v-if="!isHoliday(data) && !isWeekend(data) && (data.type === 'current-month')" class="button-area">
-                            <div>
-                                <el-button :id="data.day" size="small" :type="buttonType" round @click="bookButtonClick(data)">book</el-button>
-                            </div>
-                        </div> -->
-    
+                        <div v-else>
+                            <p>{{ whichHoliday(data)}}</p>
+                            <p>{{ (data.day.split('-').slice(2).join('')) }}</p>
+                        </div>
                     </div>
-                </template>            
-            </el-calendar>
+                    <calendar-button :key="calendarKey" :data="data" :seat="seat"/>
+                    <!-- <div v-if="!isHoliday(data) && !isWeekend(data) && (data.type === 'current-month')" class="button-area">
+                        <div>
+                            <el-button :id="data.day" size="small" :type="buttonType" round @click="bookButtonClick(data)">book</el-button>
+                        </div>
+                    </div> -->
+
+                </div>
+            </template>            
+        </el-calendar>
     </div>
 </template>
 
