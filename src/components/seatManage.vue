@@ -28,16 +28,20 @@
 
     const handleAddBtnClick = () => {
         dialogAddSeatVisible.value = true;
-        console.log("add a seat")
+        // console.log("add a seat")
     }
 
-    const handleAddSeatConfirmClick = (form:{name:string,group:string}) => {
+    const handleAddSeatConfirmClick = async (form:{name:string,group:string}) => {
         dialogAddSeatVisible.value = false;
         console.log("add a seat: ", form)
-        const res = addSeat(form);
-        console.log("handleAddSeatConfirmClick: ", res)
+        const res = await addSeat(form);
+        console.log("Seat added successfully.");
+        await getData();
     }
 
+    const handleDelete = () => {
+
+    }
 
     const form = reactive({
         name: '',
@@ -78,6 +82,7 @@
                     Detail
                 </el-button>
                 <el-button link type="primary" size="small" @click="handleEdit" disabled>Edit</el-button>
+                <el-button link type="danger" size="small" @click="handleDelete">Delete</el-button>
             </template>
         </el-table-column>
     </el-table>

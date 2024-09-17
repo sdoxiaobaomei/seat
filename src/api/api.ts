@@ -91,30 +91,31 @@ export const validateLoginUser = (username:string) => {
     })
 }
 
-export const addSeat = (seat: {name:string, group:string}) => {
+export const addSeat = async (seat: {name:string, group:string}) => {
     console.log('add a seat with name and group');
     const addSeatUrl = `${jsonDbUrl}/seats`
 
-    request({
+    const res = await request({
         url: addSeatUrl,
         method: 'POST',
         data: seat
-    }).then(res => {
-        console.log("response of add a seat: ", res)
     })
-    
 
+    console.log("response of add a seat: ", res)
     console.log('add a empty seat booking record');
     const seatBook = {
         id: `${seat.name}-${seat.group}`,
         dates: [],
     };
-
-    request ({
+    const res2 = await request ({
         url: `${jsonDbUrl}/seat-book`,
         method: 'POST',
         data: seatBook
-    }).then( res => {
-        console.log("response of add a seat booking record: ", res)
     })
+    console.log("response of add a seat booking record: ", res2)
+    
+    if (res && res2) {
+        return true;
+    }
+    return false;
 }
