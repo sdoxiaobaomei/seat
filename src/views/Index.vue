@@ -37,10 +37,10 @@ const sidebar = useSidebarStore();
                     <v-sidebar />
                 </el-aside>
                 <el-main class="content-box" :class="{ 'content-collapse': sidebar.collapse }">
-                    <transition name="move" mode="out-in">
+                    <!-- <transition name="move" mode="out-in"> -->
 
                         <router-view />
-                    </transition>
+                    <!-- </transition> -->
                     <!-- <router-view v-slot="{ Component }">
                         <transition name="move" mode="out-in">
                             <component :is="Component" />
@@ -83,5 +83,14 @@ const sidebar = useSidebarStore();
 }
 .content-collapse {
     left: 65px;
+}
+.move-enter-active,
+.move-leave-active {
+	transition: opacity 0.5s ease;
+}
+
+.move-enter-from,
+.move-leave-to {
+	opacity: 0;
 }
 </style>

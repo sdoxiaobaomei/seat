@@ -36,7 +36,7 @@ const getData = async () => {
             newEntry[key] = value;
         });
         
-        console.log("new entry: ", newEntry);
+        // console.log("new entry: ", newEntry);
         tableData.value.push(newEntry);
     });
     console.log("table data: ", tableData.value)

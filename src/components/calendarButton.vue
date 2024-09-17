@@ -150,6 +150,7 @@ watch(
                         @click="cancelButtonClick(data)">
                         Cancel
                     </el-button>
+                    <div v-else></div>
                 </template>
             </el-popconfirm>
         </div>

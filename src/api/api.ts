@@ -119,3 +119,10 @@ export const addSeat = async (seat: {name:string, group:string}) => {
     }
     return false;
 }
+
+export const deleteSeat = async (id: string) => {
+    return await request({
+        url: `${jsonDbUrl}/seats/${id}`,
+        method: 'delete',
+    });
+};

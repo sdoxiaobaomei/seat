@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { addSeat, getSeats } from '@/api/api';
+    import { addSeat, deleteSeat, getSeats } from '@/api/api';
     import { reactive, ref } from 'vue';
 
     // const tableData = ref([]);
@@ -39,8 +39,14 @@
         await getData();
     }
 
-    const handleDelete = () => {
-
+    const handleDelete = async (id:string) => {
+        try {
+            await deleteSeat(id); // 调用删除 API
+            console.log(`Seat with ID: ${id} deleted successfully`);
+            await getData(); // 重新获取座位数据
+        } catch (error) {
+            console.error('Failed to delete seat:', error);
+        }
     }
 
     const form = reactive({
@@ -77,12 +83,12 @@
         <el-table-column prop="group" label="Group" width="120" />
         <el-table-column prop="area" label="Area" width="120" />
         <el-table-column fixed="right" label="Operations" min-width="120">
-            <template #default>
+            <template #default="{row}">
                 <el-button link type="primary" size="small" @click="handleClick" disabled>
                     Detail
                 </el-button>
                 <el-button link type="primary" size="small" @click="handleEdit" disabled>Edit</el-button>
-                <el-button link type="danger" size="small" @click="handleDelete">Delete</el-button>
+                <el-button link type="danger" size="small" @click="handleDelete(row.id)">Delete</el-button>
             </template>
         </el-table-column>
     </el-table>

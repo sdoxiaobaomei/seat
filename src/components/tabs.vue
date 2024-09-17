@@ -22,7 +22,12 @@
         <div class="content">
             <el-tabs tab-position="left" type="border-card" class="tab_card" v-model="activeTab" @tab-click="handleTabClick" >
                 <el-tab-pane v-for="seat in seats" :key="seat.id" :label="seat.name" :name="seat.id.toString()">
-                    <calendarVue v-if="(activeTab === seat.id.toString())" :seat="seat"/>
+                    <template v-if="(activeTab === seat.id.toString())">
+                        <calendarVue  :seat="seat"/>
+                    </template>
+                    <template v-else>
+                        <div>Loading...</div> <!-- 占位元素，确保 el-tab-pane 有内容 -->
+                    </template>
                 </el-tab-pane>
             </el-tabs>
         </div>

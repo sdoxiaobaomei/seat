@@ -74,41 +74,6 @@
       "id": "15",
       "name": "A42",
       "group": "CM"
-    },
-    {
-      "id": "4ddc",
-      "name": "test",
-      "group": "testg"
-    },
-    {
-      "id": "d43b",
-      "name": "test",
-      "group": "testg"
-    },
-    {
-      "id": "1a8d",
-      "name": "test2",
-      "group": "testg2"
-    },
-    {
-      "id": "e561",
-      "name": "test3",
-      "group": "testg3"
-    },
-    {
-      "id": "31c5",
-      "name": "test4",
-      "group": "testg4"
-    },
-    {
-      "id": "8ebe",
-      "name": "test5",
-      "group": "testg5"
-    },
-    {
-      "id": "4771",
-      "name": "test6",
-      "group": "testg6"
     }
   ],
   "users": [
@@ -313,6 +278,10 @@
     },
     {
       "id": "test6-testg6",
+      "dates": []
+    },
+    {
+      "id": "test-ttesg",
       "dates": []
     }
   ]
