@@ -80,14 +80,20 @@
     {
       "id": "1",
       "username": "admin",
-      "password": "123",
+      "password": "",
       "group": "EE"
     },
     {
       "id": "2",
       "username": "kevin",
-      "password": "123",
-      "group": "EE"
+      "password": "",
+      "group": "CM"
+    },
+    {
+      "id": "3",
+      "username": "summer",
+      "password": "",
+      "group": "Galaxy"
     }
   ],
   "seat-book": [
