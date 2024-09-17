@@ -10,21 +10,21 @@ service.interceptors.request.use(
     },
     (error: AxiosError) => {
         console.log(error);
-        return Promise.reject();
+        return Promise.reject(error);
     }
 );
 
 service.interceptors.response.use(
     (response: AxiosResponse) => {
-        if (response.status === 200) {
+        if ([201,200,204].includes(response.status)) {
             return response;
         } else {
-            Promise.reject();
+            Promise.reject(new Error(`Unexpected response status: ${response.status}`));
         }
     },
     (error: AxiosError) => {
-        console.log(error);
-        return Promise.reject();
+        console.log("Response error: ",error);
+        return Promise.reject(error);
     }
 );
 
