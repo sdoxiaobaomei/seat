@@ -1,7 +1,8 @@
 import { ref } from 'vue';
 import request from '../utils/request';
 
-const jsonDbUrl = 'http://localhost:3000';
+const hostname = (process.env.NODE_ENV === 'uat') ? '116.62.155.169' : 'localhost';
+const jsonDbUrl = `http://${hostname}:3000`;
 
 export const getSeatBook = () => {
     return request({
