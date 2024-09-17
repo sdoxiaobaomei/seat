@@ -90,7 +90,7 @@ export const validateLoginUser = (username:string) => {
     })
 }
 
-export const addSeat = async (seat: {name:string, group:string}) => {
+export const addSeat = (seat: {name:string, group:string}) => {
     console.log('add a seat with name and group');
     const addSeatUrl = `${jsonDbUrl}/seats`
 
