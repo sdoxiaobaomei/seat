@@ -83,6 +83,7 @@ export const deleteSeatBook = (id: string, date: string) => {
 
 export const validateLoginUser = (username:string) => {
     console.log(`login as ${username}`)
+    username = username.toLowerCase();
     
     return request({
         url: jsonDbUrl + `/users/?username=${username}`,
