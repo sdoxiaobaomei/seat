@@ -11,17 +11,17 @@
       "group": "EE"
     },
     {
-      "id": "3",
+      "id": "22f6",
       "name": "A39",
       "group": "Rocket"
     },
     {
-      "id": "4",
+      "id": "8052",
       "name": "B39",
       "group": "Rocket"
     },
     {
-      "id": "5",
+      "id": "a5f2",
       "name": "C39",
       "group": "Rocket"
     },
@@ -199,6 +199,58 @@
           "username": "kevin"
         }
       ]
+    },
+    {
+      "id": "A39-Rocket",
+      "dates": []
+    },
+    {
+      "id": "B39-Rocket",
+      "dates": []
+    },
+    {
+      "id": "C39-Rocket",
+      "dates": []
+    },
+    {
+      "id": "D39-Rocket",
+      "dates": []
+    },
+    {
+      "id": "D40-Rocket",
+      "dates": []
+    },
+    {
+      "id": "B40-Flex",
+      "dates": []
+    },
+    {
+      "id": "C40-Flex",
+      "dates": []
+    },
+    {
+      "id": "A40-Galaxy",
+      "dates": []
+    },
+    {
+      "id": "A41-Galaxy",
+      "dates": []
+    },
+    {
+      "id": "B41-Galaxy",
+      "dates": []
+    },
+    {
+      "id": "C41-Galaxy",
+      "dates": []
+    },
+    {
+      "id": "D41-Galaxy",
+      "dates": []
+    },
+    {
+      "id": "A42-CM",
+      "dates": []
     }
   ]
 }
