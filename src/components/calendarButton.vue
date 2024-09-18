@@ -25,13 +25,14 @@ const fetchSeatBooking = async () => {
         return;
     }
     const seatBook = res.data;
+    console.log("get seat book: ", seatBook)
     if (seatBook.length === 0 ) {
         return;
     }
-    if (seatBook[0].dates === undefined) return;
+    if (seatBook.dates === undefined) return;
     
     // console.log("seatBook is : ", seatBook[0])
-    const findResult = seatBook[0].dates.find(rec => {
+    const findResult = seatBook.dates.find(rec => {
         if (rec.date === data.day) {
             // console.log("find book: ", rec)
             buttonTitle.value = rec.username + ' booked';

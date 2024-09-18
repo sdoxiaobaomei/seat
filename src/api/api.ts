@@ -65,7 +65,7 @@ export const isSeatBookToday = (seat: string, username:string, date: string) => 
     // })
 
     return request({
-            url: jsonDbUrl + '/seat-book?seat=' + seat,
+            url: jsonDbUrl + '/seat-book/' + seat,
             method: 'get'
         })
 }
