@@ -102,7 +102,7 @@
   "seat-book": [
     {
       "id": "B38-EE",
-      "seat": "B38-EE",
+      "seatId": "1",
       "dates": [
         {
           "id": "2024-09-20",
@@ -183,12 +183,22 @@
           "id": "2024-10-17",
           "date": "2024-10-17",
           "username": "kevin"
+        },
+        {
+          "id": "2024-09-04",
+          "date": "2024-09-04",
+          "username": "kevin"
+        },
+        {
+          "id": "2024-09-06",
+          "date": "2024-09-06",
+          "username": "kevin"
         }
       ]
     },
     {
       "id": "C38-EE",
-      "seat": "C38-EE",
+      "seatId": "2",
       "dates": [
         {
           "id": "2024-09-11",
@@ -204,54 +214,67 @@
     },
     {
       "id": "A39-Rocket",
+      "seatId": "22f6",
       "dates": []
     },
     {
       "id": "B39-Rocket",
+      "seatId": "8052",
       "dates": []
     },
     {
       "id": "C39-Rocket",
+      "seatId": "a5f2",
       "dates": []
     },
     {
       "id": "D39-Rocket",
+      "seatId": "6",
       "dates": []
     },
     {
       "id": "D40-Rocket",
+      "seatId": "7",
       "dates": []
     },
     {
       "id": "B40-Flex",
+      "seatId": "8",
       "dates": []
     },
     {
       "id": "C40-Flex",
+      "seatId": "9",
       "dates": []
     },
     {
       "id": "A40-Galaxy",
+      "seatId": "10",
       "dates": []
     },
     {
       "id": "A41-Galaxy",
+      "seatId": "11",
       "dates": []
     },
     {
       "id": "B41-Galaxy",
+      "seatId": "12",
       "dates": []
     },
     {
       "id": "C41-Galaxy",
+      "seatId": "13",
       "dates": []
     },
     {
       "id": "D41-Galaxy",
+      "seatId": "14",
       "dates": []
     },
     {
       "id": "A42-CM",
+      "seatId": "15",
       "dates": []
     }
   ]

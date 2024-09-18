@@ -23,6 +23,25 @@ const Holidays = ref([
 const sidebar = useSidebarStore();
 // const Component = ref();
 
+const isLandscape = ref(window.matchMedia("(orientation: landscape)").matches);
+const handleOrientationChange = () => {
+  isLandscape.value = window.matchMedia("(orientation: landscape)").matches;
+};
+
+onMounted(() => {
+  // 检测初始方向
+  handleOrientationChange();
+  
+  // 添加屏幕方向变化监听
+  window.addEventListener('orientationchange', handleOrientationChange);
+  window.matchMedia("(orientation: landscape)").addEventListener('change', handleOrientationChange);
+});
+
+onBeforeUnmount(() => {
+  // 移除屏幕方向变化监听
+  window.removeEventListener('orientationchange', handleOrientationChange);
+  window.matchMedia("(orientation: landscape)").removeEventListener('change', handleOrientationChange);
+});
 </script>
 
 <template>
@@ -57,7 +76,17 @@ const sidebar = useSidebarStore();
             
         <!-- </div> -->
     </div>
-
+    <div>
+    <!-- 横屏提示框 -->
+    <el-alert 
+      v-if="!isLandscape" 
+      title="解除屏幕锁定，横屏使用最佳" 
+      type="warning" 
+      show-icon 
+      center
+      closable>
+    </el-alert>
+  </div>
 </template>
 
 <style scoped>

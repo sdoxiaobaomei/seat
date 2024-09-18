@@ -96,11 +96,12 @@ function cancelButtonClick(data) {
     //cancel按钮点击事件
 }
 
-const confirmCancelEvent = () => {
+const confirmCancelEvent = async () => {
     //从后台查询当前座位和日期是谁订的，和当前登录用户进行对比
     const today = data.day;
     const id = `${seat.name}-${seat.group}`;
-    const res = deleteSeatBook(id, today);
+    const res = await deleteSeatBook(id, today);
+    
 
     console.log("delete response: ", res)
 

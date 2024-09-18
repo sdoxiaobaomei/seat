@@ -70,8 +70,8 @@ export const isSeatBookToday = (seat: string, username:string, date: string) => 
         })
 }
 
-export const deleteSeatBook = (id: string, date: string) => {
-    request({
+export const deleteSeatBook = async (id: string, date: string) => {
+    return request({
         url: jsonDbUrl + `/seat-book/${id}`,
         method: 'GET'
     }).then(res => {
@@ -105,6 +105,7 @@ export const addSeat = async (seat: {name:string, group:string}) => {
     console.log('add a empty seat booking record');
     const seatBook = {
         id: `${seat.name}-${seat.group}`,
+        seatId: `${res.data.id}`,
         dates: [],
     };
     const res2 = await request ({
@@ -121,8 +122,13 @@ export const addSeat = async (seat: {name:string, group:string}) => {
 }
 
 export const deleteSeat = async (id: string) => {
-    return await request({
+    const delSeatRes = await request({
         url: `${jsonDbUrl}/seats/${id}`,
         method: 'delete',
     });
+    const seatId = `${delSeatRes.data.name}-${delSeatRes.data.group}`
+    return await request({
+        url: `${jsonDbUrl}/seat-book/${seatId}`,
+        method: 'DELETE'
+    })
 };
