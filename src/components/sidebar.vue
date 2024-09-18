@@ -53,7 +53,7 @@ const sidebar = useSidebarStore();
                     </el-sub-menu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.index" :key="item.index" v-permiss="item.id">
+                    <el-menu-item :class="item.class" :index="item.index" :key="item.index" v-permiss="item.id">
                         <el-icon>
                             <component :is="item.icon"></component>
                         </el-icon>
@@ -82,7 +82,7 @@ const sidebar = useSidebarStore();
 }
 
 .sidebar-el-menu:not(.el-menu--collapse) {
-    width: 250px;
+    width: 200px;
 }
 
 .sidebar-el-menu {

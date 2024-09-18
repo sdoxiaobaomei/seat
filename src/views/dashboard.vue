@@ -3,12 +3,18 @@ import ticImgurl from '@/assets/img/tic.jpg';
 import ttImgurl from '@/assets/img/TT.jpg';
 import { getSeatBook } from '@/api/api';
 import { computed, ref } from 'vue';
+import { ButtonInstance } from 'element-plus';
 
 const username = localStorage.getItem('username');
 const isHighlightSelf = ref(false);
 const today = new Date();
 const currentMonth = today.getMonth() + 1;
 const currentYear = today.getFullYear();
+const open = ref(false)
+
+const ref2 = ref<ButtonInstance>()
+const ref3 = ref<ButtonInstance>()
+
 let dates = [];
 let date=new Date(today.getFullYear(),today.getMonth(),1)
 while (date.getMonth() + 1 === currentMonth) {
@@ -61,7 +67,9 @@ function splitToMonthDay(item: string) {
 </script>
 <template>
     <el-row>
-        <el-col :span="6" />
+        <el-col :span="6" >
+            <el-button type="primary" @click="open = true" size="small" >引导</el-button>
+        </el-col>
         <el-col :span="6">
             <el-image :src="ticImgurl"/>
         </el-col>
@@ -76,6 +84,7 @@ function splitToMonthDay(item: string) {
             inline-prompt
             active-text="高亮自己"
             inactive-text="不高亮"
+            class="highlight-switch"
         ></el-switch>
     </el-row>
     <el-row class="table_row">
@@ -105,6 +114,23 @@ function splitToMonthDay(item: string) {
         </el-table>
     
     </el-row>
+
+    <el-tour v-model="open">
+    <el-tour-step target=".collapse-btn" title="展开/折叠">
+      
+      <div>点击这里折叠/展开侧边菜单</div>
+    </el-tour-step>
+    <el-tour-step
+      target=".highlight-switch"
+      title=""
+      description="切换显示是否高亮你自己的名字"
+    />
+    <el-tour-step
+      target=".menu_calendar"
+      title=""
+      description="从此进入座位订阅界面"
+    />
+  </el-tour>
 </template>
 
 

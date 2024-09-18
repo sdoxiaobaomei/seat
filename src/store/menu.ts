@@ -5,12 +5,14 @@ export const menuData: Menus[] = [
         id: '0',
         title: '系统首页',
         index: '/dashboard',
+        class: 'menu_dashboard',
         icon: 'Odometer',
     },
     {
         id: '1',
         title: '订阅日历',
         index: '/calendar',
+        class:'menu_calendar',
         icon: 'HomeFilled',
         // children: [
         //     {
@@ -31,6 +33,7 @@ export const menuData: Menus[] = [
         id: '2',
         title: '座位管理',
         index: '/seat/manage',
+        class:'menu_seat_manage',
         icon: 'HomeFilled'
     }
 ];

@@ -61,7 +61,7 @@ const user=localStorage.getItem('username');
         <div class="header-left">
             <!-- <img class="logo" src="../assets/img/logo.svg" alt="" /> -->
             <div class="web-title">订座</div>
-            <div class="collapse-btn" @click="collapseChage">
+            <div class="collapse-btn" @click="collapseChage" ref="ref1">
                 
                 <el-icon v-if="sidebar.collapse">
                     <span>展开</span>

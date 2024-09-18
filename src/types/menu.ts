@@ -4,6 +4,7 @@ export interface Menus {
     icon?: string;
     index: string;
     title: string;
+    class: string;
     // permiss?: string;
     children?: Menus[];
 }
