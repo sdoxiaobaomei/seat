@@ -102,7 +102,11 @@ const selectDate = (val: CalendarDateType) => {
   
 }
 
- .custom-content {
+.container {
+    transform: scale(0.8); /* 调整缩放比例 */
+    transform-origin: top left; /* 设置缩放的基点 */
+}
+.custom-content {
   position: relative;
   top: 0;
   /* left: 0; */
@@ -123,4 +127,5 @@ const selectDate = (val: CalendarDateType) => {
     left: 200;
     align-items: stretch;
 }
+
 </style>

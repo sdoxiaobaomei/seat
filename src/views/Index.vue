@@ -80,6 +80,8 @@ const sidebar = useSidebarStore();
     transition: left 0.3s ease-in-out;
     background: #eef0fc;
     overflow: hidden;
+    overflow-x: auto; /* 启用横向滚动 */
+    overflow-y: auto; /* 启用纵向滚动 */
 }
 .content-collapse {
     left: 65px;

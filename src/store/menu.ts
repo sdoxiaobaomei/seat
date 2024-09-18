@@ -9,23 +9,23 @@ export const menuData: Menus[] = [
     },
     {
         id: '1',
-        title: '工区',
-        index: '1',
+        title: '订阅日历',
+        index: '/calendar',
         icon: 'HomeFilled',
-        children: [
-            {
-                id: '11',
-                pid: '1',
-                index: '/tic',
-                title: 'TT - 天堂',
-            },
-            {
-                id: '12',
-                pid: '1',
-                index: '/',
-                title: 'TIC - 滨江',
-            }
-        ],
+        // children: [
+        //     {
+        //         id: '11',
+        //         pid: '1',
+        //         index: '/tt',
+        //         title: 'TT - 天堂',
+        //     },
+        //     {
+        //         id: '12',
+        //         pid: '2',
+        //         index: '/',
+        //         title: 'TIC - 滨江',
+        //     }
+        // ],
     },
     {
         id: '2',

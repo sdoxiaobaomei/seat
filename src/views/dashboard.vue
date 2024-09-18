@@ -78,21 +78,26 @@ function splitToMonthDay(item: string) {
             inactive-text="不高亮"
         ></el-switch>
     </el-row>
-    <el-row>
-        <el-table :data="tableData" height="400">
+    <el-row class="table_row">
+        <el-table :data="tableData" height="330" :border="true" fit>
             <el-table-column 
                 label="座位"
                 prop="id"
-                fixed >
+                fixed
+                :min-width="100"
+                :show-overflow-tooltip="true"
+                 >
                 
             </el-table-column>
             <el-table-column 
                 v-for="(item, index) in dates" 
                 :key="index"
                 :prop="item"
-                :label="splitToMonthDay(item)">
+                :label="splitToMonthDay(item)"
+                :show-overflow-tooltip="true"
+                >
                 <template #default="{ row }">
-                    <p v-if="!isWorkday(new Date(item))" style="background-color: brown;">休息</p>
+                    <p v-if="!isWorkday(new Date(item))" style="background-color: gray;margin:0;width: 100%;">休息</p>
                     <span v-else-if="isHighlightSelf && (row[item] === username)" style="background: yellow;">{{ row[item] }}</span>
                     <span v-else>{{ row[item] }}</span>
                 </template>
@@ -103,3 +108,18 @@ function splitToMonthDay(item: string) {
 </template>
 
 
+<style scoped>
+.el-table .el-table__cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 1px;
+    table-layout: auto;
+}
+
+.el-table .el-table__row {
+	line-height: 0.5; /* 调整为你需要的行高值 */
+}
+
+
+</style>

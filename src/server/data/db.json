@@ -81,18 +81,21 @@
       "id": "1",
       "username": "admin",
       "password": "",
+      "displayname": "管理员",
       "group": "EE"
     },
     {
       "id": "2",
       "username": "kevin",
       "password": "",
+      "displayname": "吴天晨",
       "group": "CM"
     },
     {
       "id": "3",
       "username": "summer",
       "password": "",
+      "displayname": "徐露赛",
       "group": "Galaxy"
     }
   ],
@@ -187,7 +190,6 @@
       "id": "C38-EE",
       "seat": "C38-EE",
       "dates": [
-        {},
         {
           "id": "2024-09-11",
           "date": "2024-09-11",
@@ -250,38 +252,6 @@
     },
     {
       "id": "A42-CM",
-      "dates": []
-    },
-    {
-      "id": "test-testg",
-      "dates": []
-    },
-    {
-      "id": "test-testg",
-      "dates": []
-    },
-    {
-      "id": "test2-testg2",
-      "dates": []
-    },
-    {
-      "id": "test3-testg3",
-      "dates": []
-    },
-    {
-      "id": "test4-testg4",
-      "dates": []
-    },
-    {
-      "id": "test5-testg5",
-      "dates": []
-    },
-    {
-      "id": "test6-testg6",
-      "dates": []
-    },
-    {
-      "id": "test-ttesg",
       "dates": []
     }
   ]

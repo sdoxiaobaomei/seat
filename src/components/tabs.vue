@@ -18,20 +18,26 @@
 </script>
 
 <template>
-    <el-scrollbar max-height="580px">
-        <div class="content">
-            <el-tabs tab-position="left" type="border-card" class="tab_card" v-model="activeTab" @tab-click="handleTabClick" >
-                <el-tab-pane v-for="seat in seats" :key="seat.id" :label="seat.name" :name="seat.id.toString()">
-                    <template v-if="(activeTab === seat.id.toString())">
-                        <calendarVue  :seat="seat"/>
-                    </template>
-                    <template v-else>
-                        <div>Loading...</div> <!-- 占位元素，确保 el-tab-pane 有内容 -->
-                    </template>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
-    </el-scrollbar>
+    <div class="tabs-container">
+
+        <el-scrollbar max-height="780px">
+            <div class="content">
+                <el-tabs tab-position="left" type="border-card" class="tab_card" v-model="activeTab" @tab-click="handleTabClick" >
+                    <el-tab-pane v-for="seat in seats" :key="seat.id" :label="seat.name" :name="seat.id.toString()">
+                        <template v-if="(activeTab === seat.id.toString())" >
+                            <el-scrollbar max-height="430px">
+                                <calendarVue class="calendar" :seat="seat"/>
+                            </el-scrollbar>
+                        </template>
+                        
+                        <template v-else>
+                            <div>Loading...</div> <!-- 占位元素，确保 el-tab-pane 有内容 -->
+                        </template>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+        </el-scrollbar>
+    </div>
 </template>
 
 <style scss>
@@ -43,6 +49,13 @@
 }
 .tab_card{
     width: 1000px;
+    overflow-y: scroll;
 }
-
+.calendar {
+    width: 900px;
+}
+/* .tabs-container {
+    max-height: 300px;
+    overflow-y: auto;
+} */
 </style>

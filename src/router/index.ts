@@ -61,10 +61,10 @@ const routes: RouteRecordRaw[]= [
                 component: () => import('@/views/dashboard.vue'),
             },
             {
-                path:'/tic',
-                name:'tic',
+                path:'/calendar',
+                name:'calendar',
                 meta: {
-                    title: '滨江',
+                    title: '日历',
                     noAuth: false,
                 },
                 component: () => import('@/components/tabs.vue'),
