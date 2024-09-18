@@ -2,7 +2,7 @@
 import ticImgurl from '@/assets/img/tic.jpg';
 import ttImgurl from '@/assets/img/TT.jpg';
 import { getSeatBook } from '@/api/api';
-import { computed, ref } from 'vue';
+import { computed, nextTick, onMounted, ref } from 'vue';
 import { ButtonInstance } from 'element-plus';
 
 const username = localStorage.getItem('username');
@@ -47,7 +47,10 @@ const getData = async () => {
     });
     console.log("table data: ", tableData.value)
 }
-getData();
+onMounted(async () => {
+  await getData();
+ 
+});
 
 function isWorkday(date) {
     let dayInWeek = date.getDay();
@@ -64,6 +67,8 @@ function splitToMonthDay(item: string) {
     const dateArray: string[] = item.split('-');
     return `${dateArray[1]}-${dateArray[2]}`;
 }
+
+
 </script>
 <template>
     <el-row>
@@ -88,7 +93,7 @@ function splitToMonthDay(item: string) {
         ></el-switch>
     </el-row>
     <el-row class="table_row">
-        <el-table :data="tableData" height="330" :border="true" fit>
+        <el-table :data="tableData" height="330" :border="true" fit >
             <el-table-column 
                 label="座位"
                 prop="id"
