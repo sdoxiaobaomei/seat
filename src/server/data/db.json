@@ -97,7 +97,42 @@
       "password": "",
       "displayname": "徐露赛",
       "group": "Galaxy"
-    }
+    },
+    {
+      "id": "4",
+      "username": "xiaojia",
+      "password": "",
+      "displayname": "",
+      "group": "Galaxy"
+    },
+    {
+      "id": "5",
+      "username": "zhenjiang",
+      "password": "",
+      "displayname": "",
+      "group": "Rocket"
+    },
+    {
+      "id": "6",
+      "username": "zhemin",
+      "password": "",
+      "displayname": "",
+      "group": "Galaxy"
+    },
+    {
+      "id": "7",
+      "username": "yiying",
+      "password": "",
+      "displayname": "",
+      "group": "Rocket"
+    },
+    {
+      "id": "8",
+      "username": "hong",
+      "password": "",
+      "displayname": "",
+      "group": ""
+    } 
   ],
   "seat-book": [
     {
@@ -140,11 +175,6 @@
           "username": "kevin"
         },
         {
-          "id": "2024-09-24",
-          "date": "2024-09-24",
-          "username": "kevin"
-        },
-        {
           "id": "2024-09-25",
           "date": "2024-09-25",
           "username": "kevin"
@@ -157,41 +187,6 @@
         {
           "id": "2024-09-26",
           "date": "2024-09-26",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-10-09",
-          "date": "2024-10-09",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-10-16",
-          "date": "2024-10-16",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-10-08",
-          "date": "2024-10-08",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-10-10",
-          "date": "2024-10-10",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-10-17",
-          "date": "2024-10-17",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-09-04",
-          "date": "2024-09-04",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-09-06",
-          "date": "2024-09-06",
           "username": "kevin"
         }
       ]

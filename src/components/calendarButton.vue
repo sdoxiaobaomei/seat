@@ -25,7 +25,7 @@ const fetchSeatBooking = async () => {
         return;
     }
     const seatBook = res.data;
-    console.log("get seat book: ", seatBook)
+    // console.log("get seat book: ", seatBook)
     if (seatBook.length === 0 ) {
         return;
     }
