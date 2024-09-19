@@ -35,5 +35,12 @@ export const menuData: Menus[] = [
         index: '/seat/manage',
         class:'menu_seat_manage',
         icon: 'HomeFilled'
+    },
+    {
+        id: '3',
+        title: '',
+        index: '/seat/manage',
+        class:'menu_seat_manage',
+        icon: 'HomeFilled'
     }
 ];

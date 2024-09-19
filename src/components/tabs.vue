@@ -22,13 +22,13 @@
 
         <el-scrollbar max-height="780px">
             <div class="content">
-                <el-tabs tab-position="left" type="border-card" class="tab_card" v-model="activeTab" @tab-click="handleTabClick" >
+                <el-tabs type="border-card" class="tab_card" v-model="activeTab" @tab-click="handleTabClick" >
                     <el-tab-pane v-for="seat in seats" :key="seat.id" :label="seat.name" :name="seat.id.toString()">
-                        <!-- <template  > -->
-                            <!-- <el-scrollbar max-height="430px"> -->
-                                <calendarVue v-if="(activeTab === seat.id.toString())" class="calendar" :key="activeTab" :seat="seat"/>
-                            <!-- </el-scrollbar> -->
-                        <!-- </template> -->
+                        <template v-if="(activeTab === seat.id.toString())" >
+                            <el-scrollbar max-height="430px">
+                                <calendarVue  class="calendar" :key="activeTab" :seat="seat"/>
+                            </el-scrollbar>
+                        </template>
                         
                         <template v-else>
                             <div>Loading...</div> <!-- 占位元素，确保 el-tab-pane 有内容 -->

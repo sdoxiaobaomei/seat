@@ -2,6 +2,7 @@
 import IndexVue from './views/Index.vue';
 import { ElConfigProvider } from 'element-plus';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
+import Home from './views_mobile/home.vue';
 
 
 const goBack = () => {
@@ -13,12 +14,12 @@ const goBack = () => {
   <el-config-provider :locale="zhCn">
     <!-- <router-view/> -->
     <!-- <IndexVue /> -->
-
-    <router-view v-slot="{ Component }">
+    <Home/>
+    <!-- <router-view v-slot="{ Component }">
         <transition name="move" mode="out-in">
             <component :is="Component" />
         </transition>
-    </router-view>
+    </router-view> -->
 
   </el-config-provider>
 </template>

@@ -132,7 +132,7 @@
       "password": "",
       "displayname": "",
       "group": ""
-    } 
+    }
   ],
   "seat-book": [
     {
@@ -188,6 +188,11 @@
           "id": "2024-09-26",
           "date": "2024-09-26",
           "username": "kevin"
+        },
+        {
+          "id": "2024-09-02",
+          "date": "2024-09-02",
+          "username": "kevin"
         }
       ]
     },
@@ -198,11 +203,6 @@
         {
           "id": "2024-09-11",
           "date": "2024-09-11",
-          "username": "kevin"
-        },
-        {
-          "id": "2024-09-04",
-          "date": "2024-09-04",
           "username": "kevin"
         }
       ]
@@ -215,7 +215,13 @@
     {
       "id": "B39-Rocket",
       "seatId": "8052",
-      "dates": []
+      "dates": [
+        {
+          "id": "2024-09-03",
+          "date": "2024-09-03",
+          "username": "kevin"
+        }
+      ]
     },
     {
       "id": "C39-Rocket",

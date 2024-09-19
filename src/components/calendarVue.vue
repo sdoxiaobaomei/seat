@@ -111,8 +111,8 @@ const selectDate = (val: CalendarDateType) => {
   top: 0;
   /* left: 0; */
   
-  width: 100%;
-  height: 100%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   /* justify-content: center; */
@@ -127,5 +127,8 @@ const selectDate = (val: CalendarDateType) => {
     left: 200;
     align-items: stretch;
 }
-
+.el-calendar {
+    --el-calendar-cell-width: 40px;
+    
+}
 </style>
