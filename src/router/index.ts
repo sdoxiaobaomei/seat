@@ -101,7 +101,7 @@ const routes: RouteRecordRaw[]= [
         component: home,
         meta: {
             title: '手机端首页',
-            noAuth: true,
+            noAuth: false,
         },
     }
 ];
@@ -111,21 +111,21 @@ const router = createRouter({
     routes,
 });
 // 
-// router.beforeEach((to, from, next) => {
-//     // console.log('brefore each')
-//     NProgress.start();
-//     const role = localStorage.getItem('username');
-//     // const permiss = usePermissStore();
+router.beforeEach((to, from, next) => {
+    // console.log('brefore each')
+    NProgress.start();
+    const role = localStorage.getItem('username');
+    // const permiss = usePermissStore();
     
-//     if (!role && to.meta.noAuth !== true) {
-//         next('/login');
-//     // } else if (typeof to.meta.permiss == 'string' && !permiss.key.includes(to.meta.permiss)) {
-//     //     // 如果没有权限，则进入403
-//     //     next('/403');
-//     } else {
-//         next('/home');
-//     }
-// });
+    if (!role && to.meta.noAuth !== true) {
+        next('/login');
+    // } else if (typeof to.meta.permiss == 'string' && !permiss.key.includes(to.meta.permiss)) {
+    //     // 如果没有权限，则进入403
+    //     next('/403');
+    } else {
+        next();
+    }
+});
 
 router.afterEach(() => {
     NProgress.done();

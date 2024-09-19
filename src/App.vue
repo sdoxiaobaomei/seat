@@ -14,12 +14,12 @@ const goBack = () => {
   <el-config-provider :locale="zhCn">
     <!-- <router-view/> -->
     <!-- <IndexVue /> -->
-    <Home/>
-    <!-- <router-view v-slot="{ Component }">
+    <!-- <Home/> -->
+    <router-view v-slot="{ Component }">
         <transition name="move" mode="out-in">
             <component :is="Component" />
         </transition>
-    </router-view> -->
+    </router-view>
 
   </el-config-provider>
 </template>
