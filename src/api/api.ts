@@ -4,11 +4,50 @@ import request from '../utils/request';
 const hostname = (process.env.NODE_ENV === 'uat') ? '116.62.155.169' : 'localhost';
 const jsonDbUrl = `http://${hostname}:3000`;
 
+export const getUserByUsername = async (username: string) => {
+    username = username.toLowerCase();
+    console.log("get user by username, ", username)
+    return request({
+        url: `${jsonDbUrl}/users/?username=${username}`,
+        method: 'GET',
+    })
+}
+
+
 export const getSeatBook = () => {
     return request({
         url: jsonDbUrl+'/seat-book' ,
         method: 'get'
     })
+}
+
+interface seatBookByDateCard {
+    id: string;
+    seat: string;
+    bookedUser: string;
+}
+
+export const getSeatBookByDate = async (date: string): Promise<seatBookByDateCard[]> => {
+    const seatBookList = await getSeatBook();
+
+    const seatBookListByDate: seatBookByDateCard[] = [];
+    // console.log("seatbook list: ", seatBookList.data)
+    seatBookList.data.forEach(element => {
+        // console.log("seatbook ele: ", element)
+        let bookedUsername = '';
+        if (element.dates.length > 0) {
+            const findRec = element.dates.find(record => record.id === date);
+            console.log("finded record: ", findRec)
+            bookedUsername = findRec ? findRec.username : '';
+        }
+        seatBookListByDate.push({
+            id: date,
+            seat: element.id,
+            bookedUser: bookedUsername,
+        })
+    });
+    console.log("final seat book list by date: ", seatBookListByDate)
+    return seatBookListByDate;
 }
 
 export const getSeats = async () => {

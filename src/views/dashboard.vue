@@ -5,7 +5,8 @@ import { deleteSeatBook, getSeatBook, insertSeatBook } from '@/api/api';
 import { computed, nextTick, onMounted, ref } from 'vue';
 import { ButtonInstance, ElMessage } from 'element-plus';
 import { InfoFilled } from '@element-plus/icons-vue';
-import calendar from '../store/lunarDay';
+import CalendarMobileVue from '@/components/calendarMobileVue.vue';
+
 
 const username = localStorage.getItem('username');
 const isHighlightSelf = ref(false);
@@ -79,27 +80,9 @@ const handleClose = (done: () => void) => {
     done();
 }
 
-//日期选择器部分
-const picker1 = ref(''); 
 
-function isHoliday({dayjs}) {
-    // console.log("cell: ",dayjs.format('YYYY-MM-DD'))
-    const date = dayjs.format('YYYY-MM-DD');
-    
-    let solarDayArr = date.split('-');
-    let lunarDay:any = calendar.solar2lunar(solarDayArr[0], solarDayArr[1], solarDayArr[2]);
-    if (lunarDay.holidays) console.log(date,"是假期")
-    return lunarDay.holidays != null;
-}
 
-function isWeekend({dayjs}) {
-    // console.log("cell: ",dayjs.format('YYYY-MM-DD'))
-    const date = dayjs.format('YYYY-MM-DD');
-    
-    let solarDayArr = date.split('-');
-    let lunarDay:any = calendar.solar2lunar(solarDayArr[0], solarDayArr[1], solarDayArr[2]);
-    return lunarDay.nWeek === 6 || lunarDay.nWeek === 7;
-}
+
 
 //事件部分
 // 订座按钮点击事件
@@ -123,7 +106,7 @@ const bookButtonClick = async (row: any,item:any) => {
         }
     }
 
-    console.log("insert Seat Book result: ", insertSeatBook(row.id,username,item));
+    // console.log("insert Seat Book result: ", insertSeatBook(row.id,username,item));
     
     // 调用 API 插入预订记录
     const insertResult = await insertSeatBook(row.id, username, item);
@@ -144,6 +127,15 @@ const confirmCancelEvent = async (row: any, day: any) => {
     //从后台查询当前座位和日期是谁订的，和当前登录用户进行对比
     // const today = data.day;
     // const id = `${seat.name}-${seat.group}`;
+    // console.log("cancel which row: ", row[day])
+    const cancelUser = row[day];
+    if (cancelUser !== username) {
+        ElMessage({
+            message: `您无法取消${cancelUser}的预定`,
+            type: 'error',
+        });
+        return;
+    }
     const cancelResult = await deleteSeatBook(row.id, day);
     console.log("delete response: ", cancelResult)
 
@@ -161,7 +153,7 @@ const confirmCancelEvent = async (row: any, day: any) => {
             <el-button type="primary" @click="open = true" size="small" >引导</el-button>
         </el-col>
         <el-col :span="6">
-            <el-button type="primary" @click="drawer = true" size="small" >座位图</el-button>
+            <el-button type="primary" @click="drawer = true" size="small" class="button-seatPic">座位图</el-button>
             <el-drawer
                 v-model="drawer"
                 title="座位图"
@@ -174,29 +166,14 @@ const confirmCancelEvent = async (row: any, day: any) => {
             </el-drawer>
         </el-col>
         <el-col :span="6">
-            <el-button type="primary" @click="drawer2 = true" size="small" >按日期查询座位</el-button>
+            <el-button disabled type="primary" @click="drawer2 = true" size="small" >按日期查询座位</el-button>
             <el-drawer
                 v-model="drawer2"
                 title="日历"
                 direction="rtl"
                 size="80%"
             >
-                <el-date-picker
-                    v-model="picker1"
-                    type="date"
-                    placeholder="Pick a day"
-                    size="small"
-                    format="YYYY/MM/DD"
-                    value-format="YYYY-MM-DD"
-                >
-                    <template #default="cell">
-                        <div class="cell" :class="{ current: cell.isCurrent }">
-                        <span class="text">{{ cell.text }}</span>
-                        <span v-if="isHoliday(cell) || isWeekend(cell)" class="holiday" ></span>
-                        </div>
-                    </template>
-                </el-date-picker>
-                
+                <CalendarMobileVue />
             </el-drawer>
         </el-col>
         <el-col :span="6" />
@@ -218,7 +195,8 @@ const confirmCancelEvent = async (row: any, day: any) => {
                 fixed
                 :min-width="100"
                 :show-overflow-tooltip="true"
-                 >
+                filters
+                >
                 
             </el-table-column>
             <el-table-column 
@@ -238,7 +216,7 @@ const confirmCancelEvent = async (row: any, day: any) => {
                             width="220"
                             :icon="InfoFilled"
                             icon-color="#626AEF"
-                            title="Are you sure to delete this?"
+                            title="Are you sure to cancel?"
                             @confirm="confirmCancelEvent(row, item)"
                             v-else
                         >
@@ -254,20 +232,22 @@ const confirmCancelEvent = async (row: any, day: any) => {
     </el-row>
 
     <el-tour v-model="open">
-    <el-tour-step target=".collapse-btn" title="展开/折叠">
-      
-      <div>点击这里折叠/展开侧边菜单</div>
-    </el-tour-step>
-    <el-tour-step
-      target=".highlight-switch"
-      title=""
-      description="切换显示是否高亮你自己的名字"
-    />
-    <el-tour-step
-      target=".menu_calendar"
-      title=""
-      description="从此进入座位订阅界面"
-    />
+        <el-tour-step 
+            
+            title="预订/取消">
+        
+            <div>点击绿色按钮订座,点击表格中名字取消预订</div>
+        </el-tour-step>
+        <el-tour-step
+            target=".highlight-switch"
+            title=""
+            description="切换显示是否高亮你自己的名字"
+        />
+        <el-tour-step
+            target=".button-seatPic"
+            title=""
+            description="点此查看座位图"
+        />
   </el-tour>
 
 
@@ -294,14 +274,5 @@ const confirmCancelEvent = async (row: any, day: any) => {
     justify-content: center;
 
 }
-.cell .holiday {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: var(--el-color-danger);
-  border-radius: 50%;
-  bottom: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+
 </style>

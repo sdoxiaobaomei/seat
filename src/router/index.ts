@@ -8,79 +8,46 @@ import NProgress from 'nprogress';
 import home from '@/views_mobile/home.vue'
 import 'nprogress/nprogress.css';
 
-// const routes: RouteRecordRaw[] = [
-//     {
-//         path: '/',
-//         redirect: '/dashboard',
-//     },
-//     {
-//         path: '/',
-//         name: 'Home',
-//         component: index,
-//         children: [
-//             {
-//                 path: '/dashboard',
-//                 name: 'dashboard',
-//                 meta: {
-//                     title: '日历',
-//                     noAuth: true,
-//                 },
-//                 component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
-//             },
-//             {
-//                 path: '/login',
-//                 name: 'login',
-//                 component: login,
-//             },
-//             {
-//                 path: '/register',
-//                 name: 'Register',
-//                 component: register,
-//             },
-//         ],
-//     },
-//     { path: '/:path(.*)', redirect: '/404' }, 
-// ];
 
 const routes: RouteRecordRaw[]= [
     {
         path: '/',
-        redirect: '/home',
+        redirect: '/dashboard',
     },
-    // {
-    //     path: '/',
-    //     name: 'index',
-    //     component: index,
-    //     children: [
-    //         {
-    //             path:'/dashboard',
-    //             name:'dashboard',
-    //             meta: {
-    //                 title: '系统首页',
-    //                 noAuth: false,
-    //             },
-    //             component: () => import('@/views/dashboard.vue'),
-    //         },
-    //         {
-    //             path:'/calendar',
-    //             name:'calendar',
-    //             meta: {
-    //                 title: '日历',
-    //                 noAuth: false,
-    //             },
-    //             component: () => import('@/components/tabs.vue'),
-    //         },
-    //         {
-    //             path: '/seat/manage',
-    //             name: 'seat-manage',
-    //             meta: {
-    //                 title: '座位管理',
-    //                 noAuth: false,
-    //             },
-    //             component: () => import('@/components/seatManage.vue'),
-    //         }
-    //     ],
-    // },
+    {
+        path: '/',
+        name: 'home',
+        component: home,
+        children: [
+            {
+                path:'/dashboard',
+                name:'dashboard',
+                meta: {
+                    title: '详情页',
+                    noAuth: false,
+                },
+                component: () => import('@/views/dashboard.vue'),
+            },
+            {
+                path: '/profile',
+                name: 'profile',
+                meta: {
+                    title: '个人信息',
+                    noAuth: false,
+                },
+                component: () => import('@/views/profile.vue'),
+            },
+            {
+                path: '/orders',
+                name: 'orders',
+                meta: {
+                    title: '订单',
+                    noAuth: false,
+                },
+                component: () => import('@/views/orders.vue'),
+            }
+        ],
+    },
     {
         path: '/register',
         name: 'Register',
@@ -95,15 +62,6 @@ const routes: RouteRecordRaw[]= [
         },
         component: login,
     },
-    {
-        path: '/home',
-        name:'home',
-        component: home,
-        meta: {
-            title: '手机端首页',
-            noAuth: false,
-        },
-    }
 ];
  
 const router = createRouter({

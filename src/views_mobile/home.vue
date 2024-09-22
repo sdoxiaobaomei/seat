@@ -5,8 +5,13 @@
         </el-header>
         
         <el-main class="content-box">
-            <Dashboard />
-
+            <!-- <router-view v-slot="{ Component }">
+                <transition name="move" mode="out-in">
+                    <component :is="Component" />
+                </transition>
+            </router-view> -->
+            <!-- <Dashboard /> -->
+            <router-view/>
         </el-main>
 
         <el-footer>
@@ -29,8 +34,21 @@ import Footer from "@/components/footer.vue";
     display: flex;
     flex-direction: column;
     height: 100vh;
+    padding: 0;  /* 确保没有内部的边距 */
+    margin: 0;   /* 确保没有外部的边距 */
 }
-.el-footer {
-    background-color: yellowgreen;
+
+.el-header, .el-main, .el-footer {
+    padding: 0;  /* 确保没有内部的边距 */
+    margin: 0;   /* 确保没有外部的边距 */
+}
+.el-main {
+    padding-top: 10px;
+}
+.custom-footer {
+  width: 100%;         /* 确保footer占满屏幕宽度 */
+  margin: 0;           /* 去除任何外边距 */
+  padding: 0;          /* 去除内边距 */
+  box-sizing: border-box; /* 确保padding不会影响布局 */
 }
 </style>
