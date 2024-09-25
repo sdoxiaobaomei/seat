@@ -3,37 +3,46 @@ import ticImgurl from '@/assets/img/tic.jpg';
 import ttImgurl from '@/assets/img/TT.jpg';
 import { deleteSeatBook, getSeatBook, insertSeatBook } from '@/api/api';
 import { computed, nextTick, onMounted, ref } from 'vue';
-import { ButtonInstance, ElMessage } from 'element-plus';
-import { InfoFilled } from '@element-plus/icons-vue';
+import { ButtonInstance, ElMessage, ElTable } from 'element-plus';
+import { InfoFilled,ArrowLeft, ArrowRight} from '@element-plus/icons-vue';
 import CalendarMobileVue from '@/components/calendarMobileVue.vue';
-
+import calendar from '../store/lunarDay';
 
 const username = localStorage.getItem('username');
 const isHighlightSelf = ref(false);
 const today = new Date();
-const currentMonth = today.getMonth() + 1;
+const currentMonth = ref(today.getMonth() + 1);//default to the month of today
 const currentYear = today.getFullYear();
 const open = ref(false)
 
 const ref2 = ref<ButtonInstance>()
 const ref3 = ref<ButtonInstance>()
 
-let dates = [];
-let date=new Date(today.getFullYear(),today.getMonth(),1)
-while (date.getMonth() + 1 === currentMonth) {
+const dates = ref([]);
+//得到dates数值，根据传入的月份更新
+const getDatesByMonth = ( changedMonth: number) => {
+    if ((changedMonth === currentMonth.value) && (dates.value.length > 0)) return;
+    dates.value = [];//initial dates
+    // console.log("get dates for month: ", changedMonth)
+    let date=new Date(currentYear,changedMonth - 1, 1)
+    while (date.getMonth() + 1 === changedMonth) {
+        
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');  // getMonth() 从0开始计数，需加1
+        const day = String(date.getDate()).padStart(2, '0');
     
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');  // getMonth() 从0开始计数，需加1
-    const day = String(date.getDate()).padStart(2, '0');
-  
-    let formattedDate = `${year}-${month}-${day}`;
-    dates.push(formattedDate);
-    date.setDate(date.getDate() + 1);
+        let formattedDate = `${year}-${month}-${day}`;
+        dates.value.push(formattedDate);
+        date.setDate(date.getDate() + 1);
+    }
+    currentMonth.value=changedMonth;
+    // console.log("dates: ", dates)
 }
-
+getDatesByMonth(currentMonth.value);
 const tableData = ref([]);
 
 const getData = async () => {
+    // getDatesByMonth(currentMonth.value);
     tableData.value = [];
     const res = await getSeatBook();
     let seatBookList = res.data;
@@ -58,8 +67,17 @@ onMounted(async () => {
 });
 
 function isWorkday(date) {
-    let dayInWeek = date.getDay();
-    return !(dayInWeek === 0 || dayInWeek === 6);
+    // let dayInWeek = date.getDay();
+    // console.log("cell: ",dayjs.format('YYYY-MM-DD'))
+    // const date = dayjs.format('YYYY-MM-DD');
+    // let formatDate = date.format('YYYY-MM-DD');
+    // console.log("isWorkday date is: ", date.getFullYear(), (date.getMonth()+1).padStart(2, '0'), date.getDate().padStart(2, '0'))
+    // return false;
+    // let solarDayArr = date.split('-');
+    let lunarDay:any = calendar.solar2lunar(date.getFullYear(), String(date.getMonth()+1).padStart(2, '0'), String(date.getDate()).padStart(2, '0'));
+    if (lunarDay.holidays) console.log(date,"是假期")
+    return lunarDay.holidays == null;
+    // return !(dayInWeek === 0 || dayInWeek === 6);
 }
 function splitToMonthDay(item: string) {
     const today = new Date();
@@ -79,9 +97,6 @@ const drawer2 = ref(false);
 const handleClose = (done: () => void) => {
     done();
 }
-
-
-
 
 
 //事件部分
@@ -146,6 +161,50 @@ const confirmCancelEvent = async (row: any, day: any) => {
     // 触发表格刷新
     tableData.value = [...tableData.value];
 }
+
+const myTable = ref<InstanceType<typeof ElTable> | null>(null);
+//跳转到今天
+const showTodayData = () => {
+    console.log("show today Data, ")
+    // const year = today.getFullYear();
+    // const month = String(today.getMonth() + 1).padStart(2, '0');  // getMonth() 从0开始计数，需加1
+    // const day = String(today.getDate()).padStart(2, '0');
+    
+    // let formattedDate = `${month}-${day}`;
+
+    const table = myTable.value?.$el;
+    if (!table) return;
+
+    const columnsElements = table.querySelectorAll('.el-table__header th');
+
+    for (let i = 0; i < columnsElements.length; i++) {
+    const column = columnsElements[i];
+    console.log("column.innerText: ",column.innerText)
+    if (column.innerText === "今天") {
+        const columnOffset = column.getBoundingClientRect().left;
+        const tableRect = table.getBoundingClientRect();
+        const scrollLeft = columnOffset - tableRect.left + table.scrollLeft;
+
+        table.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        break;
+    }
+    }
+
+}
+
+//展示下个月数据
+const nextMonthData = () => {
+    getDatesByMonth(currentMonth.value + 1);
+    
+    getData();
+}
+
+//展示上个月数据
+const lastMonthData = () => {
+    getDatesByMonth(currentMonth.value - 1);
+    getData();
+}
+
 </script>
 <template>
     <el-row>
@@ -179,16 +238,29 @@ const confirmCancelEvent = async (row: any, day: any) => {
         <el-col :span="6" />
     </el-row>
     <el-row>
-        <el-switch
-            v-model="isHighlightSelf"
-            inline-prompt
-            active-text="高亮自己"
-            inactive-text="不高亮"
-            class="highlight-switch"
-        ></el-switch>
+        <el-col :span="6">
+
+            <el-switch
+                v-model="isHighlightSelf"
+                inline-prompt
+                active-text="高亮自己"
+                inactive-text="不高亮"
+                class="highlight-switch"
+            ></el-switch>
+        </el-col>
+        <el-col :span="18" style="display: flex;align-items: center;">
+
+            <el-button-group size="small">
+                <el-button type="primary" :icon="ArrowLeft" @click="lastMonthData">上个月</el-button>
+                <el-button type="primary" @click="showTodayData">今天</el-button>
+                <el-button type="primary" @click="nextMonthData">
+                    下个月<el-icon class="el-icon--right"><ArrowRight /></el-icon>
+                </el-button>
+            </el-button-group>
+        </el-col>
     </el-row>
     <el-row class="table_row">
-        <el-table :data="tableData" height="430" :border="true" :fit="false" >
+        <el-table :data="tableData" ref="myTable" height="430"  :border="true" :fit="false" >
             <el-table-column 
                 label="座位"
                 prop="id"
