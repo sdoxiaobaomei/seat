@@ -3,6 +3,7 @@ import request from '../utils/request';
 
 const hostname = (process.env.NODE_ENV === 'uat') ? '116.62.155.169' : 'localhost';
 const jsonDbUrl = `http://${hostname}:3000`;
+const springUrl = `http://localhost:8080`
 
 export const getUserByUsername = async (username: string) => {
     username = username.toLowerCase();
