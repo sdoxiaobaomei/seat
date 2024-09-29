@@ -1,13 +1,10 @@
-package org.chai.controller;
+package org.chai.seat.controller;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
-import org.chai.vo.UserVO;
+import org.chai.seat.vo.UserVO;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -85,7 +82,7 @@ public class MainController {
     @GetMapping
     UserVO getUserByUsername(@RequestParam String username) {
         List<UserVO> userVOList = JSON.parseArray(usersJson, UserVO.class);
-        return userVOList.strea+m().filter(user-> user.getUsername().equals(username)).findFirst().get();
+        return userVOList.stream().filter(user-> user.getUsername().equals(username)).findFirst().get();
     }
 
 }

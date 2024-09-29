@@ -1,4 +1,4 @@
-package org.chai;
+package org.chai.seat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

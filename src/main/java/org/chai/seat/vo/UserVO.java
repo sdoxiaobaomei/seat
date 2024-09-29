@@ -1,4 +1,4 @@
-package org.chai.vo;
+package org.chai.seat.vo;
 
 
 public class UserVO {
