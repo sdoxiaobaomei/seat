@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://116.62.155.169:3306/seat_dev?useUnicode=true&characterEncoding=UTF-8
+    username: kevin
+    password: WEIya@135
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: org.chai.seat.entity

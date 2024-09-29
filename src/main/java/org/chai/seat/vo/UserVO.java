@@ -2,19 +2,16 @@ package org.chai.seat.vo;
 
 
 public class UserVO {
-    private int id;
     private String username;
-    private String password;
+    private String password = "123";
     private String displayName;
     private String group;
 
+    public UserVO(String username, String displayName, String group) {
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.username = username;
+        this.displayName = displayName;
+        this.group = group;
     }
 
     public String getUsername() {
