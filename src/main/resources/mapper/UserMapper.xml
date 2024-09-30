@@ -4,4 +4,8 @@
     <select id="selectUserByName" parameterType="String" resultType="org.chai.seat.entity.User">
         SELECT * FROM users WHERE username = #{username};
     </select>
+
+    <select id="selectUserById" parameterType="int" resultType="org.chai.seat.entity.User">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
 </mapper>

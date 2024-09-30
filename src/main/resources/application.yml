@@ -4,6 +4,7 @@ spring:
     username: kevin
     password: WEIya@135
     driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: org.chai.seat.entity
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

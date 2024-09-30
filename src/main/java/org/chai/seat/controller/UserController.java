@@ -8,6 +8,7 @@ import org.chai.seat.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,11 +31,28 @@ public class UserController {
 
     final private UserService userService;
 
-    @GetMapping
-    UserVO getUserByUsername(@RequestParam String username) {
+    @GetMapping("/{username}")
+    UserVO getUserByUsername(@PathVariable("username") String username) {
         User userByName = userService.getUserByName(username);
         System.out.println(userByName);
-        return new UserVO(userByName.getUsername(), userByName.getDisplayName(), userByName.getGroup());
+        return new UserVO(userByName.getUsername(), userByName.getDisplayName(), userByName.getUserGroup());
     }
+
+//    @GetMapping("/{id}")
+//    UserVO getUserById(@PathVariable("id") String id) {
+//        long i = Long.parseLong(id);
+//        User user = userService.getUserById(i);
+//        return new UserVO(user.getUsername(), user.getDisplayName(), user.getGroup());
+//    }
+
+
+
+    @GetMapping
+    List<UserVO> getUsers() {
+        List<User> allUsers = userService.getAllUsers();
+        List<UserVO> userVOList = new ArrayList<>();
+        return userVOList;
+    }
+
 
 }

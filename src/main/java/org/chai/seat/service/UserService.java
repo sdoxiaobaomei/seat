@@ -1,9 +1,12 @@
 package org.chai.seat.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.chai.seat.dao.UserDao;
 import org.chai.seat.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -12,6 +15,19 @@ public class UserService {
     private UserDao userDao;
 
     public User getUserByName (String username) {
-        return userDao.selectUserByName(username);
+        User user = new User();
+        user.setUsername(username);
+        return userDao.selectOne(new QueryWrapper<>(user));
+    }
+
+    public User getUserById(Long id) {
+        userDao.selectById(id);
+        return null;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> users = userDao.selectList(new QueryWrapper<>());
+        System.out.println(users);
+        return users;
     }
 }
