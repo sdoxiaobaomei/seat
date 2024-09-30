@@ -5,13 +5,13 @@ public class UserVO {
     private String username;
     private String password = "123";
     private String displayName;
-    private String group;
+    private String userGroup;
 
-    public UserVO(String username, String displayName, String group) {
+    public UserVO(String username, String displayName, String userGroup) {
 
         this.username = username;
         this.displayName = displayName;
-        this.group = group;
+        this.userGroup = userGroup;
     }
 
     public String getUsername() {
@@ -38,11 +38,11 @@ public class UserVO {
         this.displayName = displayName;
     }
 
-    public String getGroup() {
-        return group;
+    public String getUserGroup() {
+        return userGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setUserGroup(String userGroup) {
+        this.userGroup = userGroup;
     }
 }

@@ -18,12 +18,11 @@ public class UserDaoTest {
         user.setUsername("chai");
         user.setPassword("123456");
         user.setRole("CM");
-        user.setGroup("CM");
+        user.setUserGroup("CM");
         user.setDisplayName("吴天晨");
         int insert = userDao.insert(user);
         System.out.println("insert User number of: " + insert);
-        System.out.println("-------select a user");
-        User testUser = userDao.selectUserByName("testUser");
-        System.out.println(testUser.toString());
+        System.out.println("-------select all users");
+
     }
 }

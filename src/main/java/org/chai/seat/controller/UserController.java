@@ -2,6 +2,7 @@ package org.chai.seat.controller;
 
 
 import com.alibaba.fastjson2.JSON;
+import org.chai.seat.dao.UserDao;
 import org.chai.seat.entity.User;
 import org.chai.seat.service.UserService;
 import org.chai.seat.vo.UserVO;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final UserDao userDao;
     //    @GetMapping
 //    public JSONArray getAllUsers() {
 //
@@ -25,8 +27,9 @@ public class UserController {
 //    }
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserDao userDao) {
         this.userService = userService;
+        this.userDao = userDao;
     }
 
     final private UserService userService;
@@ -52,6 +55,11 @@ public class UserController {
         List<User> allUsers = userService.getAllUsers();
         List<UserVO> userVOList = new ArrayList<>();
         return userVOList;
+    }
+
+    @PutMapping
+    void insertUser(UserVO userVO) {
+        userService.insertUser(userVO);
     }
 
 

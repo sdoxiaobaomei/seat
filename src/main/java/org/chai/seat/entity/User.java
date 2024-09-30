@@ -10,8 +10,8 @@ import lombok.Data;
 @TableName("users")
 public class User {
 
-    @TableId
-    private Long id;
+    @TableField(exist = false)
+    private Integer id;
     private String username;
     private String password;
     private String userGroup;
