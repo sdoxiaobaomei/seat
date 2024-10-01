@@ -57,10 +57,19 @@ public class UserController {
         return userVOList;
     }
 
-    @PutMapping
+    @PostMapping
     void insertUser(UserVO userVO) {
         userService.insertUser(userVO);
     }
 
+    @PutMapping
+    void updateUser(UserVO userVO) {
+        userService.updateUser(userVO);
+    }
+
+    @DeleteMapping("{id}")
+    void deleteUser(Integer id) {
+        userService.deleteUser(id);
+    }
 
 }

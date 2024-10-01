@@ -42,4 +42,16 @@ public class UserService {
         int insert = userDao.insert(user);
         System.out.println("insert user result: " + insert);
     }
+
+    public void deleteUser(Integer id) {
+        userDao.deleteById(id);
+    }
+
+    public void updateUser(UserVO userVO) {
+        User user = userDao.selectUserByName(userVO.getUsername());
+        user.setDisplayName(userVO.getDisplayName());
+        user.setUserGroup(userVO.getUserGroup());
+        int update = userDao.updateById(user);
+        System.out.println("update user result: " + update);
+    }
 }
