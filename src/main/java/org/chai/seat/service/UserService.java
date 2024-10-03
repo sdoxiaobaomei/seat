@@ -1,6 +1,7 @@
 package org.chai.seat.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.chai.seat.dao.UserDao;
 import org.chai.seat.entity.User;
 import org.chai.seat.vo.UserVO;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService extends ServiceImpl<UserDao, User> {
 
     @Autowired
     private UserDao userDao;
@@ -18,7 +19,8 @@ public class UserService {
     public User getUserByName (String username) {
         User user = new User();
         user.setUsername(username);
-        return userDao.selectOne(new QueryWrapper<>(user));
+//        return userDao.selectUserByName(username);
+        return userDao.selectOne(new QueryWrapper<User>().eq("username", username));
     }
 
     public User getUserById(Long id) {

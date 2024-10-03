@@ -9,7 +9,7 @@ export const getUserByUsername = async (username: string) => {
     username = username.toLowerCase();
     console.log("get user by username, ", username)
     return request({
-        url: `${jsonDbUrl}/users/?username=${username}`,
+        url: `${springUrl}/users/${username}`,
         method: 'GET',
     })
 }

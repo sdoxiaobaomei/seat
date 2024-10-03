@@ -36,9 +36,9 @@ const form = reactive({
 const getUserInfo = async () =>{
 
     const userInfo = await getUserByUsername(username);
-    console.log('userinfo: ',userInfo.data[0])
-    form.displayname = userInfo.data[0].displayname;
-    form.group = userInfo.data[0].group;
+    console.log('userinfo: ',userInfo)
+    form.displayname = userInfo.data.displayName;
+    form.group = userInfo.data.userGroup;
 }
 getUserInfo();
 
