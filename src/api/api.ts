@@ -15,11 +15,33 @@ export const getUserByUsername = async (username: string) => {
 }
 
 
-export const getSeatBook = () => {
-    return request({
-        url: jsonDbUrl+'/seat-book' ,
-        method: 'get'
-    })
+export const getSeatBook = async (dates)  => {
+    console.log("dates:",dates)
+    // const res = await request({
+    //     url: springUrl+'/api/bookings/tableData' ,
+    //     method: 'post',
+    //     data: dates.value
+    // })
+
+    try {
+        const res = await request({
+            url: springUrl+'/api/bookings/tableData' ,
+            method: 'post',
+            data: dates.value
+        });
+        return res.data; // 成功返回数据
+    } catch (error: any) {
+        if (error.response) {
+            // 捕获 HTTP 错误（如 400、404、500）
+            console.error(`Error ${error.response.status}:`, error.response.data);
+        } else if (error.request) {
+            // 请求已发出，但未收到响应
+            console.error("No response received:", error.request);
+        } else {
+            // 其他错误
+            console.error("Error:", error.message);
+        } // 抛出错误，让调用方处理
+    }
 }
 
 interface seatBookByDateCard {
@@ -29,7 +51,7 @@ interface seatBookByDateCard {
 }
 
 export const getSeatBookByDate = async (date: string): Promise<seatBookByDateCard[]> => {
-    const seatBookList = await getSeatBook();
+    const seatBookList = await getSeatBook(dates);
 
     const seatBookListByDate: seatBookByDateCard[] = [];
     // console.log("seatbook list: ", seatBookList.data)
@@ -58,11 +80,34 @@ export const getSeats = async () => {
     })
 }
 
-export const insertSeatBook = (id: string, username: string, date: string): Promise<boolean> => {
+/**
+ * 插入座位预订记录（通过后端校验）
+ * 
+ * @param id 座位的唯一标识
+ * @param username 用户名
+ * @param date 预订日期
+ * @returns Promise<boolean> 表示预订是否成功
+ */
+export const insertSeatBook = async (id: string, username: string, date: string): Promise<boolean> => {
     console.log("prameters: ", id,username,date)
-    console.log("url: ", jsonDbUrl+ '/seat-book/' + id)
+    console.log("url: ", jsonDbUrl+ '/book/' + id)
     let data = {};
     let dateList = [];
+
+    try {
+        // 调用后端接口进行预订
+        const res = await request({
+            url: `${springUrl}/api/bookings/book`,
+            method: 'post',
+            data: { seatId: id, username: username, bookingDate: date }
+        });
+
+        console.log("Booking successful: ", res.data);
+        return true;
+    } catch (error) {
+        console.error("Booking failed: ", error.response?.data || error.message);
+        return false;
+    }
     request({
         url: jsonDbUrl + '/seat-book/' + id,
         method: 'get'
@@ -85,7 +130,8 @@ export const insertSeatBook = (id: string, username: string, date: string): Prom
 
         console.log("fianl data: " , res.data)
         // data = res.data;
-        let url= jsonDbUrl + '/seat-book/' + id;
+        // let url= jsonDbUrl + '/seat-book/' + id;
+        let url = springUrl + '/book/' + id;
         request.patch(url, {dates:dateList});
         // console.log("dateList: ", JSON.stringify(dateList)); 
     });

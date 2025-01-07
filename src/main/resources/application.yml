@@ -4,7 +4,15 @@ spring:
     username: kevin
     password: WEIya@135
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  web:
+    cors:
+      allowed-origins: http://localhost:5173
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+
+
+

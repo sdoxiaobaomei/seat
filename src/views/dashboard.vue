@@ -44,40 +44,36 @@ const tableData = ref([]);
 const getData = async () => {
     // getDatesByMonth(currentMonth.value);
     tableData.value = [];
-    const res = await getSeatBook();
-    let seatBookList = res.data;
+    const resData = await getSeatBook(dates);
+    console.log("table data: ", resData)
+    tableData.value = resData;
     // console.log("seatBookList: ", seatBookList)
-    seatBookList.forEach(element => {
-        let newEntry = {};
-        newEntry["id"] = element.id;
-        element.dates.forEach(item => {
-            // console.log(item)
-            let key = item.date;
-            let value = item.username;
-            newEntry[key] = value;
-        });
+    // seatBookList.forEach(element => {
+    //     let newEntry = {};
+    //     newEntry["id"] = element.id;
+    //     element.dates.forEach(item => {
+    //         // console.log(item)
+    //         let key = item.date;
+    //         let value = item.username;
+    //         newEntry[key] = value;
+    //     });
         
-        // console.log("new entry: ", newEntry);
-        tableData.value.push(newEntry);
-    });
-    console.log("table data: ", tableData.value)
+    //     // console.log("new entry: ", newEntry);
+    //     tableData.value.push(newEntry);
+    // });
+    // console.log("table data: ", tableData.value)
 }
 onMounted(async () => {
   await getData();
 });
 
-function isWorkday(date) {
-    // let dayInWeek = date.getDay();
-    // console.log("cell: ",dayjs.format('YYYY-MM-DD'))
-    // const date = dayjs.format('YYYY-MM-DD');
-    // let formatDate = date.format('YYYY-MM-DD');
-    // console.log("isWorkday date is: ", date.getFullYear(), (date.getMonth()+1).padStart(2, '0'), date.getDate().padStart(2, '0'))
-    // return false;
-    // let solarDayArr = date.split('-');
+function isWorkday(date: Date) {
+    let isWorkday = true;
     let lunarDay:any = calendar.solar2lunar(date.getFullYear(), String(date.getMonth()+1).padStart(2, '0'), String(date.getDate()).padStart(2, '0'));
-    if (lunarDay.holidays) console.log(date,"是假期")
-    return lunarDay.holidays == null;
-    // return !(dayInWeek === 0 || dayInWeek === 6);
+    
+    isWorkday = (lunarDay.holidays == null);//节假日
+    isWorkday = lunarDay.nWeek <= 5; //周末
+    return isWorkday;
 }
 function splitToMonthDay(item: string) {
     const today = new Date();
@@ -103,7 +99,7 @@ const handleClose = (done: () => void) => {
 // 订座按钮点击事件
 const bookButtonClick = async (row: any,item:any) => {
     //后台验证订座是否成功，然后设置已订状态
-    // console.log("Inserting seat book:", today, "当前行：", row);
+     console.log("Inserting seat book:", today, "当前行：", row.subscriptions, "item是：",item);
     // console.log("什么是item: ", item)
     let username = localStorage.getItem('username');
 
@@ -124,11 +120,11 @@ const bookButtonClick = async (row: any,item:any) => {
     // console.log("insert Seat Book result: ", insertSeatBook(row.id,username,item));
     
     // 调用 API 插入预订记录
-    const insertResult = await insertSeatBook(row.id, username, item);
+    const insertResult = insertSeatBook(row.seatId, username, item);
     
     if (!insertResult) {return}
     ElMessage({
-        message: `您已成功在 ${item} 预订了${row.id}`,
+        message: `您已成功在 ${item} 预订了${row.seatName}`,
         type: 'success',
     });
     // 重新获取最新的预订状态
@@ -263,7 +259,7 @@ const lastMonthData = () => {
         <el-table :data="tableData" ref="myTable" height="430"  :border="true" :fit="false" >
             <el-table-column 
                 label="座位"
-                prop="id"
+                prop="seatName"
                 fixed
                 :min-width="100"
                 :show-overflow-tooltip="true"
@@ -282,8 +278,8 @@ const lastMonthData = () => {
                 <template #default="{ row }" >
                     <div class="dashboard-cell">
                         <p v-if="!isWorkday(new Date(item))" style="background-color: gray;margin:0;width: 100%;">休息</p>
-                        <span v-else-if="isHighlightSelf && (row[item] === username)" style="background: yellow;font-size: large;">{{ row[item] }}</span>
-                        <span v-else-if="!row[item]"><el-button type="success" size="small" circle @click="bookButtonClick(row, item)">订</el-button></span>
+                        <span v-else-if="isHighlightSelf && (row[item] === username)" style="background: yellow;font-size: large;">{{ row.subscriptions[item] }}</span>
+                        <span v-else-if="!row.subscriptions[item]"><el-button type="success" size="small" circle @click="bookButtonClick(row, item)">订</el-button></span>
                         <el-popconfirm
                             width="220"
                             :icon="InfoFilled"
@@ -293,7 +289,7 @@ const lastMonthData = () => {
                             v-else
                         >
                             <template #reference>
-                                <span>{{ row[item] }}</span>
+                                <span>{{ row.subscriptions[item] }}</span>
                             </template>
                         </el-popconfirm>
 

@@ -1,5 +1,6 @@
 package org.chai.seat.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @TableName("seats")
 public class Seat {
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
     private String seatName;
     private String seatGroup;

@@ -86,7 +86,7 @@ const handleDateClear = async () => {
 const bookSeat = async (item) => {
     const date = item.id;
     const seat = item.seat;
-    const insertResult = await insertSeatBook(seat, username, date );
+    const insertResult = insertSeatBook(seat, username, date );
     console.log("insert result: ", insertResult)
 }
 

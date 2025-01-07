@@ -79,7 +79,7 @@ const bookButtonClick = async (data: any) => {
     // console.log("insert Seat Book result: ",insertSeatBook(id,username,date));
     
     // 调用 API 插入预订记录
-    const insertResult = await insertSeatBook(id, username!, today);
+    const insertResult = insertSeatBook(id, username!, today);
     
     if (!insertResult) {return}
       // 手动更新按钮状态
