@@ -120,7 +120,7 @@ const bookButtonClick = async (row: any,item:any) => {
     // console.log("insert Seat Book result: ", insertSeatBook(row.id,username,item));
     
     // 调用 API 插入预订记录
-    const insertResult = insertSeatBook(row.seatId, username, item);
+    const insertResult = await insertSeatBook(row.seatId, username, item);
     
     if (!insertResult) {return}
     ElMessage({
@@ -130,7 +130,7 @@ const bookButtonClick = async (row: any,item:any) => {
     // 重新获取最新的预订状态
     row[item] = username;
     // tableData.value = [...tableData.value];
-    // await getData();
+    getData();
 }
 
 //取消预订事件

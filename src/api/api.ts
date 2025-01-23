@@ -108,36 +108,6 @@ export const insertSeatBook = async (id: string, username: string, date: string)
         console.error("Booking failed: ", error.response?.data || error.message);
         return false;
     }
-    request({
-        url: jsonDbUrl + '/seat-book/' + id,
-        method: 'get'
-    }).then(res => {
-        console.log("add seat before: ", res.data.dates)
-
-        const record = {};
-        record["id"] = date;
-        record["date"] = date;
-        record["username"] = username;
- 
-        dateList = res.data.dates;
-        if (dateList.find( rec => rec.date === date)) {
-            console.log(id, " is already booked")
-            return false;
-        }
-        dateList.push(record);
-        
-        console.log("add seat after: ", dateList)
-
-        console.log("fianl data: " , res.data)
-        // data = res.data;
-        // let url= jsonDbUrl + '/seat-book/' + id;
-        let url = springUrl + '/book/' + id;
-        request.patch(url, {dates:dateList});
-        // console.log("dateList: ", JSON.stringify(dateList)); 
-    });
-
-    return Promise.resolve(true);
-
 }
 
 export const isSeatBookToday = (seat: string, username:string, date: string) => {
