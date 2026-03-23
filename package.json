@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run build:copy",
+    "build:copy": "cp -r dist/* src/main/resources/static/",
+    "build:all": "npm run build && mvn clean package -DskipTests",
     "server": "npx json-server ./src/server/data/db.json",
     "ali-server": "npx json-server ./src/server/data/db.json --host 116.62.155.169",
     "preview": "vite preview"
