@@ -108,9 +108,9 @@ const bookButtonClick = async (row: any,item:any) => {
         const currentRow = tableData.value[i];
         
         // 如果某个座位的当前日期已经被用户预定
-        if (currentRow[item] === username) {
+        if (currentRow.subscriptions[item] === username) {
             ElMessage({
-                message: `您已在 ${item} 预订了${currentRow.id}，请先取消再预订！`,
+                message: `您已在 ${item} 预订了${currentRow.seatName}，请先取消再预订！`,
                 type: 'warning',
             });
             return; // 终止预定流程
@@ -128,18 +128,29 @@ const bookButtonClick = async (row: any,item:any) => {
         type: 'success',
     });
     // 重新获取最新的预订状态
-    row[item] = username;
+    row.subscriptions[item] = username;
     // tableData.value = [...tableData.value];
     getData();
 }
 
 //取消预订事件
 const confirmCancelEvent = async (row: any, day: any) => {
+    console.log("取消预订 - row:", row)
+    console.log("取消预订 - day:", day)
+    console.log("取消预订 - row.seatId:", row.seatId)
+    console.log("取消预订 - row.subscriptions:", row.subscriptions)
+    console.log("取消预订 - row.subscriptions[day]:", row.subscriptions[day])
+    console.log("取消预订 - username:", username)
+    
     //从后台查询当前座位和日期是谁订的，和当前登录用户进行对比
-    // const today = data.day;
-    // const id = `${seat.name}-${seat.group}`;
-    // console.log("cancel which row: ", row[day])
-    const cancelUser = row[day];
+    const cancelUser = row.subscriptions[day];
+    if (!cancelUser) {
+        ElMessage({
+            message: `该日期没有预订记录`,
+            type: 'error',
+        });
+        return;
+    }
     if (cancelUser !== username) {
         ElMessage({
             message: `您无法取消${cancelUser}的预定`,
@@ -147,45 +158,45 @@ const confirmCancelEvent = async (row: any, day: any) => {
         });
         return;
     }
-    const cancelResult = await deleteSeatBook(row.id, day);
+    const cancelResult = await deleteSeatBook(row.seatId, username, day);
     console.log("delete response: ", cancelResult)
 
     // 手动更新按钮状态
-    if (!cancelResult) return;
+    if (!cancelResult) {
+        ElMessage({
+            message: '取消失败，请重试',
+            type: 'error',
+        });
+        return;
+    }
     // 取消预定后更新当前行的订座状态
-    row[day] = null;
+    row.subscriptions[day] = null;
     // 触发表格刷新
     tableData.value = [...tableData.value];
+    ElMessage({
+        message: '取消成功',
+        type: 'success',
+    });
 }
 
 const myTable = ref<InstanceType<typeof ElTable> | null>(null);
 //跳转到今天
 const showTodayData = () => {
-    console.log("show today Data, ")
-    // const year = today.getFullYear();
-    // const month = String(today.getMonth() + 1).padStart(2, '0');  // getMonth() 从0开始计数，需加1
-    // const day = String(today.getDate()).padStart(2, '0');
-    
-    // let formattedDate = `${month}-${day}`;
-
     const table = myTable.value?.$el;
     if (!table) return;
 
     const columnsElements = table.querySelectorAll('.el-table__header th');
-
     for (let i = 0; i < columnsElements.length; i++) {
-    const column = columnsElements[i];
-    console.log("column.innerText: ",column.innerText)
-    if (column.innerText === "今天") {
-        const columnOffset = column.getBoundingClientRect().left;
-        const tableRect = table.getBoundingClientRect();
-        const scrollLeft = columnOffset - tableRect.left + table.scrollLeft;
-
-        table.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-        break;
+        const column = columnsElements[i];
+        if (column.innerText === "今天") {
+            const tableBody = table.querySelector('.el-table__body-wrapper .el-table__body');
+            if (tableBody) {
+                const columnOffset = column.offsetLeft;
+                tableBody.scrollLeft = columnOffset - 100;
+            }
+            break;
+        }
     }
-    }
-
 }
 
 //展示下个月数据
@@ -278,7 +289,7 @@ const lastMonthData = () => {
                 <template #default="{ row }" >
                     <div class="dashboard-cell">
                         <p v-if="!isWorkday(new Date(item))" style="background-color: gray;margin:0;width: 100%;">休息</p>
-                        <span v-else-if="isHighlightSelf && (row[item] === username)" style="background: yellow;font-size: large;">{{ row.subscriptions[item] }}</span>
+                        <span v-else-if="isHighlightSelf && (row.subscriptions[item] === username)" style="background: yellow;font-size: large;">{{ row.subscriptions[item] }}</span>
                         <span v-else-if="!row.subscriptions[item]"><el-button type="success" size="small" circle @click="bookButtonClick(row, item)">订</el-button></span>
                         <el-popconfirm
                             width="220"
@@ -322,25 +333,69 @@ const lastMonthData = () => {
 </template>
 
 
-<style >
+<style scoped>
 .el-table .el-table__cell {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 4px 0 !important;
+    padding: 8px 4px !important;
     table-layout: auto;
     text-align: center !important;
+    font-size: 14px;
 }
 
-.el-table .el-table__row {
-	line-height: 0.5; /* 调整为你需要的行高值 */
+.el-table .el-table__header th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    font-weight: 600;
 }
 
-.dashboard-cell{
+.el-table .el-table__row:hover {
+    background-color: #f5f7fa !important;
+}
+
+.dashboard-cell {
     display: flex;
     align-items: center;
     justify-content: center;
-
+    min-height: 40px;
 }
 
+.dashboard-cell span {
+    padding: 4px 12px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 500;
+}
+
+.dashboard-cell .el-button {
+    border-radius: 20px;
+    padding: 8px 16px;
+}
+
+.el-button-group .el-button {
+    border-radius: 4px;
+}
+
+.el-row {
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #fafafa;
+    border-radius: 8px;
+}
+
+.highlight-switch {
+    margin-left: 8px;
+}
+
+.table_row {
+    margin-top: 16px;
+}
+
+.table_row .el-table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
 </style>

@@ -84,27 +84,33 @@ const rules: FormRules = {
 const login = ref<FormInstance>();
 
 const submitForm = async (formEl: FormInstance | undefined) => {
-    // console.log("login as ?");
-    // console.log(formEl);
-    
     if (!formEl) return;
-    const res = await validateLoginUser(param.username);
     
-    formEl.validate((valid: boolean) => {
-        if (valid && (res.data.length !== 0)) {
+    try {
+        const valid = await formEl.validate();
+        if (!valid) return;
+        
+        const res = await validateLoginUser(param.username);
+        
+        if (res.data && res.data.username) {
             ElMessage.success('登陆成功');
-            localStorage.setItem('username', param.username);
-            router.push('/dashboard');
-            if (checked.value) {
-                localStorage.setItem('login-param', JSON.stringify(param));
-            } else {
-                localStorage.removeItem('login-param');
+            try {
+                localStorage.setItem('username', param.username);
+                if (checked.value) {
+                    localStorage.setItem('login-param', JSON.stringify(param));
+                } else {
+                    localStorage.removeItem('login-param');
+                }
+            } catch (storageError) {
+                console.warn('localStorage not available:', storageError);
             }
+            router.push('/dashboard');
         } else {
-            ElMessage.error('登陆失败');
-            // return false;
+            ElMessage.error('登陆失败：用户不存在');
         }
-    });
+    } catch (error) {
+        ElMessage.error('登陆失败：' + (error as Error).message);
+    }
     // formEl.validate((valid: boolean) => {
     //     if (valid) {
     //         ElMessage.success('登录成功');

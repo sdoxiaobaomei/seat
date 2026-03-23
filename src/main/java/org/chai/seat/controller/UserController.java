@@ -16,15 +16,6 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserDao userDao;
-    //    @GetMapping
-//    public JSONArray getAllUsers() {
-//
-//        final JSONObject jsonObject = JSON.parseObject(usersJson);
-//        JSONArray users = (JSONArray) jsonObject.get("users");
-//        System.out.println(users);
-//
-//        return users;
-//    }
 
     @Autowired
     public UserController(UserService userService, UserDao userDao) {
@@ -34,7 +25,7 @@ public class UserController {
 
     final private UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "*")
     @GetMapping("/{username}")
     UserVO getUserByUsername(@PathVariable("username") String username) {
         User userByName = userService.getUserByName(username);
@@ -42,19 +33,23 @@ public class UserController {
         return new UserVO(userByName.getUsername(), userByName.getDisplayName(), userByName.getUserGroup());
     }
 
-//    @GetMapping("/{id}")
-//    UserVO getUserById(@PathVariable("id") String id) {
-//        long i = Long.parseLong(id);
-//        User user = userService.getUserById(i);
-//        return new UserVO(user.getUsername(), user.getDisplayName(), user.getGroup());
-//    }
-
-
-
-    @GetMapping
-    List<UserVO> getUsers() {
-        List<User> allUsers = userService.getAllUsers();
+    @CrossOrigin(origins = "*")
+    @GetMapping("")
+    List<UserVO> getUsers(@RequestParam(value = "username", required = false) String username) {
+        List<User> users;
+        if (username != null && !username.isEmpty()) {
+            users = new ArrayList<>();
+            User user = userService.getUserByName(username);
+            if (user != null) {
+                users.add(user);
+            }
+        } else {
+            users = userService.getAllUsers();
+        }
         List<UserVO> userVOList = new ArrayList<>();
+        for (User u : users) {
+            userVOList.add(new UserVO(u.getUsername(), u.getDisplayName(), u.getUserGroup()));
+        }
         return userVOList;
     }
 

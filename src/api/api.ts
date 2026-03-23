@@ -2,8 +2,8 @@ import { ref } from 'vue';
 import request from '../utils/request';
 
 const hostname = (process.env.NODE_ENV === 'uat') ? '116.62.155.169' : 'localhost';
-const jsonDbUrl = `http://${hostname}:3000`;
-const springUrl = `http://localhost:8080`
+// const jsonDbUrl 已废弃，统一使用 springUrl
+const springUrl = ``
 
 export const getUserByUsername = async (username: string) => {
     username = username.toLowerCase();
@@ -75,7 +75,7 @@ export const getSeatBookByDate = async (date: string): Promise<seatBookByDateCar
 
 export const getSeats = async () => {
     return request({
-        url: jsonDbUrl+'/seats',
+        url: `${springUrl}/seats`,
         method: 'get'
     })
 }
@@ -89,11 +89,6 @@ export const getSeats = async () => {
  * @returns Promise<boolean> 表示预订是否成功
  */
 export const insertSeatBook = async (id: string, username: string, date: string): Promise<boolean> => {
-    console.log("prameters: ", id,username,date)
-    console.log("url: ", jsonDbUrl+ '/book/' + id)
-    let data = {};
-    let dateList = [];
-
     try {
         // 调用后端接口进行预订
         const res = await request({
@@ -111,30 +106,28 @@ export const insertSeatBook = async (id: string, username: string, date: string)
 }
 
 export const isSeatBookToday = (seat: string, username:string, date: string) => {
-    // request({
-    //     url: jsonDbUrl + '/seat-book/' + seat,
-    //     method: 'get'
-    // }).then(res => {
-    //     const seatBook = res.data;
-    //     console.log("response.data: ",res.data)
-    //     return seatBook.dates.find(rec => rec.date === date);
-    // })
-
     return request({
-            url: jsonDbUrl + '/seat-book/' + seat,
+            url: `${springUrl}/api/bookings/seat-book/${seat}`,
             method: 'get'
         })
 }
 
-export const deleteSeatBook = async (id: string, date: string) => {
-    return request({
-        url: jsonDbUrl + `/seat-book/${id}`,
-        method: 'GET'
-    }).then(res => {
-        const pacthUrl = `${jsonDbUrl}/seat-book/${id}`;
-        const updatedDates = res.data.dates.filter((rec: {date: string})=> rec.date !== date);
-        return request.patch(pacthUrl, {dates: updatedDates});
-    })
+export const deleteSeatBook = async (seatId: string, username: string, date: string) => {
+    try {
+        const res = await request({
+            url: `${springUrl}/api/bookings/cancel`,
+            method: 'DELETE',
+            params: {
+                seatId: seatId,
+                userId: username,
+                bookingDate: date
+            }
+        });
+        return true;
+    } catch (error) {
+        console.error("Cancel booking failed: ", error);
+        return false;
+    }
 }
 
 export const validateLoginUser = (username:string) => {
@@ -142,49 +135,27 @@ export const validateLoginUser = (username:string) => {
     username = username.toLowerCase();
     
     return request({
-        url: jsonDbUrl + `/users/?username=${username}`,
+        url: `${springUrl}/users/${username}`,
         method: 'GET',
     })
 }
 
-export const addSeat = async (seat: {name:string, group:string}) => {
+export const addSeat = async (seat: {seatName:string, seatGroup:string}) => {
     console.log('add a seat with name and group');
-    const addSeatUrl = `${jsonDbUrl}/seats`
-
+    
     const res = await request({
-        url: addSeatUrl,
+        url: `${springUrl}/seats`,
         method: 'POST',
         data: seat
     })
 
     console.log("response of add a seat: ", res)
-    console.log('add a empty seat booking record');
-    const seatBook = {
-        id: `${seat.name}-${seat.group}`,
-        seatId: `${res.data.id}`,
-        dates: [],
-    };
-    const res2 = await request ({
-        url: `${jsonDbUrl}/seat-book`,
-        method: 'POST',
-        data: seatBook
-    })
-    console.log("response of add a seat booking record: ", res2)
-    
-    if (res && res2) {
-        return true;
-    }
-    return false;
+    return true;
 }
 
 export const deleteSeat = async (id: string) => {
-    const delSeatRes = await request({
-        url: `${jsonDbUrl}/seats/${id}`,
-        method: 'delete',
-    });
-    const seatId = `${delSeatRes.data.name}-${delSeatRes.data.group}`
     return await request({
-        url: `${jsonDbUrl}/seat-book/${seatId}`,
-        method: 'DELETE'
+        url: `${springUrl}/seats/${id}`,
+        method: 'DELETE',
     })
 };

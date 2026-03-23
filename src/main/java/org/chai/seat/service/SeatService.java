@@ -1,5 +1,6 @@
 package org.chai.seat.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.chai.seat.dao.SeatDao;
 import org.chai.seat.entity.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +14,23 @@ public class SeatService {
     @Autowired
     private SeatDao seatDao;
 
-
     public List<Seat> getAllSeats() {
-        return seatDao.selectList(null); // 查询所有座位
+        return seatDao.selectList(null);
     }
 
-    public Seat getSeatById(Long seatId) {
-        return seatDao.selectById(seatId); // 根据ID查询座位
+    public Seat getSeatById(String seatId) {
+        return seatDao.selectOne(new QueryWrapper<Seat>().eq("id", seatId));
     }
 
     public boolean addSeat(Seat seat) {
-        return seatDao.insert(seat) > 0; // 插入座位
+        return seatDao.insert(seat) > 0;
     }
 
-    public boolean updateSeat(Long seatId, Seat seat) {
-        seat.setId(seatId); // 确保更新的ID正确
-        return seatDao.updateById(seat) > 0; // 更新座位
+    public boolean updateSeat(String seatId, Seat seat) {
+        return seatDao.update(seat, new QueryWrapper<Seat>().eq("id", seatId)) > 0;
     }
 
-    public boolean deleteSeat(Long seatId) {
-        return seatDao.deleteById(seatId) > 0; // 删除座位
+    public boolean deleteSeat(String seatId) {
+        return seatDao.delete(new QueryWrapper<Seat>().eq("id", seatId)) > 0;
     }
 }

@@ -34,7 +34,7 @@
     const handleAddSeatConfirmClick = async (form:{name:string,group:string}) => {
         dialogAddSeatVisible.value = false;
         console.log("add a seat: ", form)
-        const res = await addSeat(form);
+        const res = await addSeat({seatName: form.name, seatGroup: form.group});
         console.log("Seat added successfully.");
         await getData();
     }

@@ -1,8 +1,12 @@
 package org.chai.seat.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.chai.seat.dao.BookingDao;
+import org.chai.seat.dao.UserDao;
 import org.chai.seat.dto.TableRowDTO;
 import org.chai.seat.entity.Booking;
 import org.chai.seat.entity.Seat;
+import org.chai.seat.entity.User;
 import org.chai.seat.service.BookingService;
 import org.chai.seat.vo.BookingVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,41 +14,31 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/bookings")
+@CrossOrigin(origins = "*")
 public class BookingController {
 
     private final BookingService bookingService;
+    private final BookingDao bookingDao;
+    private final UserDao userDao;
 
     @Autowired
-    public BookingController(BookingService bookingService) {
+    public BookingController(BookingService bookingService, BookingDao bookingDao, UserDao userDao) {
         this.bookingService = bookingService;
+        this.bookingDao = bookingDao;
+        this.userDao = userDao;
     }
 
-    /**
-     * 获取座位表格数据。
-     *
-     * @param dates 日期列表
-     * @return 表格数据
-     */
     @PostMapping("/tableData")
     public ResponseEntity<List<TableRowDTO>> getTableData(@RequestBody List<String> dates) {
         List<TableRowDTO> tableData = bookingService.getTableData(dates);
         return ResponseEntity.ok(tableData);
     }
 
-    /**
-     * 预订座位。
-     *
-     * @param seatId 座位 ID
-     * @param userId 用户 ID
-     * @param bookingDate 预订日期
-     * @return 成功预订的响应
-     */
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/book")
     public ResponseEntity<String> bookSeat(@RequestBody BookingVO bookingRequest) {
         boolean success = bookingService.bookSeat(
@@ -59,18 +53,10 @@ public class BookingController {
         }
     }
 
-    /**
-     * 取消座位预订。
-     *
-     * @param seatId 座位 ID
-     * @param userId 用户 ID
-     * @param bookingDate 预订日期
-     * @return 成功取消的响应
-     */
     @DeleteMapping("/cancel")
     public ResponseEntity<String> cancelBooking(
-            @RequestParam Long seatId,
-            @RequestParam Long userId,
+            @RequestParam String seatId,
+            @RequestParam String userId,
             @RequestParam String bookingDate) {
         boolean success = bookingService.cancelBooking(seatId, userId, LocalDate.parse(bookingDate));
         if (success) {
@@ -80,54 +66,59 @@ public class BookingController {
         }
     }
 
-    /**
-     * 获取指定用户的所有预订记录。
-     *
-     * @param userId 用户 ID
-     * @return 用户的所有预订记录
-     */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Booking>> getUserBookings(@PathVariable Long userId) {
+    public ResponseEntity<List<Booking>> getUserBookings(@PathVariable String userId) {
         List<Booking> bookings = bookingService.getUserBookings(userId);
         return ResponseEntity.ok(bookings);
     }
 
-    /**
-     * 按日期查询所有座位的预订信息。
-     *
-     * @param bookingDate 预订日期
-     * @return 该日期所有座位的预订记录
-     */
     @GetMapping("/date/{bookingDate}")
     public ResponseEntity<List<Booking>> getBookingsByDate(@PathVariable String bookingDate) {
         List<Booking> bookings = bookingService.getBookingsByDate(LocalDate.parse(bookingDate));
         return ResponseEntity.ok(bookings);
     }
 
-    /**
-     * 按用户和日期查询空闲座位。
-     *
-     * @param userId 用户 ID
-     * @param bookingDate 预订日期
-     * @return 用户在该日期可以预订的空闲座位
-     */
     @GetMapping("/available-seats")
     public ResponseEntity<List<Seat>> getAvailableSeatsByUserAndDate(
-            @RequestParam Long userId,
+            @RequestParam String userId,
             @RequestParam String bookingDate) {
         List<Seat> availableSeats = bookingService.getAvailableSeatsByUserAndDate(userId, LocalDate.parse(bookingDate));
         return ResponseEntity.ok(availableSeats);
     }
 
-    /**
-     * 获取指定用户在当前月份所有日期的空闲座位（未预订的座位）。
-     *
-     * @param userId 用户 ID
-     * @return 当前月份用户可以预订的空闲座位
-     */
     @GetMapping("/available-seats-month/{userId}")
-    public ResponseEntity<Map<LocalDate, List<Seat>>> getAvailableSeatsForUserInCurrentMonth(@PathVariable Long userId) {
+    public ResponseEntity<Map<LocalDate, List<Seat>>> getAvailableSeatsForUserInCurrentMonth(@PathVariable String userId) {
         Map<LocalDate, List<Seat>> availableSeats = bookingService.getAvailableSeatsForUserInCurrentMonth(userId);
         return ResponseEntity.ok(availableSeats);
+    }
+
+    @GetMapping("/seat-book/{seatId}")
+    public ResponseEntity<Map<String, Object>> getSeatBookings(@PathVariable String seatId) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", seatId);
+        
+        List<Map<String, String>> dates = bookingDao.selectList(
+            new QueryWrapper<Booking>().eq("seat_id", seatId)
+        ).stream().map(b -> {
+            Map<String, String> dateMap = new HashMap<>();
+            dateMap.put("id", b.getBookingDate().toString());
+            dateMap.put("date", b.getBookingDate().toString());
+            User user = userDao.selectById(b.getUserId());
+            dateMap.put("username", user != null ? user.getUsername() : "");
+            return dateMap;
+        }).collect(Collectors.toList());
+        
+        result.put("dates", dates);
+        return ResponseEntity.ok(result);
+    }
+    
+    @PatchMapping("/seat-book/{seatId}")
+    public ResponseEntity<Map<String, Object>> updateSeatBookings(
+            @PathVariable String seatId,
+            @RequestBody Map<String, Object> updateData) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", seatId);
+        result.put("updated", true);
+        return ResponseEntity.ok(result);
     }
 }
