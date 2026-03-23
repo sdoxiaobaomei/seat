@@ -1,0 +1,35 @@
+{
+  "name": "vite-vue-starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "server": "npx json-server ./src/server/data/db.json",
+    "ali-server": "npx json-server ./src/server/data/db.json --host 116.62.155.169",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "element-plus": "^2.8.1",
+    "express": "^4.19.2",
+    "json-server": "^1.0.0-beta.2",
+    "mongodb": "^6.8.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate": "^3.2.3",
+    "vue": "^3.4.38",
+    "vue-router": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "unplugin-auto-import": "^0.11.2",
+    "unplugin-vue-components": "^0.22.4",
+    "vite": "^5.4.1",
+    "vite-plugin-vue-setup-extend": "^0.4.0"
+  }
+}

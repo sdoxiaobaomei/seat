@@ -1,0 +1,251 @@
+{
+  "seats": [
+    {
+      "id": "1",
+      "name": "B38",
+      "group": "EE"
+    },
+    {
+      "id": "2",
+      "name": "C38",
+      "group": "EE"
+    },
+    {
+      "id": "22f6",
+      "name": "A39",
+      "group": "Rocket"
+    },
+    {
+      "id": "8052",
+      "name": "B39",
+      "group": "Rocket"
+    },
+    {
+      "id": "a5f2",
+      "name": "C39",
+      "group": "Rocket"
+    },
+    {
+      "id": "6",
+      "name": "D39",
+      "group": "Rocket"
+    },
+    {
+      "id": "7",
+      "name": "D40",
+      "group": "Rocket"
+    },
+    {
+      "id": "8",
+      "name": "B40",
+      "group": "Flex"
+    },
+    {
+      "id": "9",
+      "name": "C40",
+      "group": "Flex"
+    },
+    {
+      "id": "10",
+      "name": "A40",
+      "group": "Galaxy"
+    },
+    {
+      "id": "11",
+      "name": "A41",
+      "group": "Galaxy"
+    },
+    {
+      "id": "12",
+      "name": "B41",
+      "group": "Galaxy"
+    },
+    {
+      "id": "13",
+      "name": "C41",
+      "group": "Galaxy"
+    },
+    {
+      "id": "14",
+      "name": "D41",
+      "group": "Galaxy"
+    },
+    {
+      "id": "15",
+      "name": "A42",
+      "group": "CM"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "",
+      "displayname": "管理员",
+      "group": "EE"
+    },
+    {
+      "id": "2",
+      "username": "kevin",
+      "password": "",
+      "displayname": "吴天晨",
+      "group": "CM"
+    },
+    {
+      "id": "3",
+      "username": "summer",
+      "password": "",
+      "displayname": "徐露赛",
+      "group": "Galaxy"
+    },
+    {
+      "id": "4",
+      "username": "xiaojia",
+      "password": "",
+      "displayname": "",
+      "group": "Galaxy"
+    },
+    {
+      "id": "5",
+      "username": "zhenjiang",
+      "password": "",
+      "displayname": "",
+      "group": "Rocket"
+    },
+    {
+      "id": "6",
+      "username": "zhemin",
+      "password": "",
+      "displayname": "",
+      "group": "Galaxy"
+    },
+    {
+      "id": "7",
+      "username": "yiying",
+      "password": "",
+      "displayname": "",
+      "group": "Rocket"
+    },
+    {
+      "id": "8",
+      "username": "hong",
+      "password": "",
+      "displayname": "",
+      "group": ""
+    }
+  ],
+  "seat-book": [
+    {
+      "id": "B38-EE",
+      "seatId": "1",
+      "dates": [
+        {
+          "id": "2024-09-02",
+          "date": "2024-09-02",
+          "username": "kevin"
+        },
+        {
+          "id": "2024-09-04",
+          "date": "2024-09-04",
+          "username": "kevin"
+        },
+        {
+          "id": "2024-09-26",
+          "date": "2024-09-26",
+          "username": "kevin"
+        },
+        {
+          "id": "2024-10-10",
+          "date": "2024-10-10",
+          "username": "admin"
+        }
+      ]
+    },
+    {
+      "id": "C38-EE",
+      "seatId": "2",
+      "dates": [
+        {
+          "id": "2024-09-03",
+          "date": "2024-09-03",
+          "username": "kevin"
+        },
+        {
+          "id": "2024-10-09",
+          "date": "2024-10-09",
+          "username": "admin"
+        },
+        {
+          "id": "2024-12-01",
+          "date": "2024-12-01",
+          "username": "admin"
+        }
+      ]
+    },
+    {
+      "id": "A39-Rocket",
+      "seatId": "22f6",
+      "dates": []
+    },
+    {
+      "id": "B39-Rocket",
+      "seatId": "8052",
+      "dates": []
+    },
+    {
+      "id": "C39-Rocket",
+      "seatId": "a5f2",
+      "dates": []
+    },
+    {
+      "id": "D39-Rocket",
+      "seatId": "6",
+      "dates": []
+    },
+    {
+      "id": "D40-Rocket",
+      "seatId": "7",
+      "dates": []
+    },
+    {
+      "id": "B40-Flex",
+      "seatId": "8",
+      "dates": []
+    },
+    {
+      "id": "C40-Flex",
+      "seatId": "9",
+      "dates": []
+    },
+    {
+      "id": "A40-Galaxy",
+      "seatId": "10",
+      "dates": []
+    },
+    {
+      "id": "A41-Galaxy",
+      "seatId": "11",
+      "dates": []
+    },
+    {
+      "id": "B41-Galaxy",
+      "seatId": "12",
+      "dates": []
+    },
+    {
+      "id": "C41-Galaxy",
+      "seatId": "13",
+      "dates": []
+    },
+    {
+      "id": "D41-Galaxy",
+      "seatId": "14",
+      "dates": []
+    },
+    {
+      "id": "A42-CM",
+      "seatId": "15",
+      "dates": []
+    }
+  ]
+}
